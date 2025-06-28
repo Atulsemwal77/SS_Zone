@@ -1,21 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import { BrowserRouter } from 'react-router-dom';
-// import './index.css'
-// import App from './App.jsx'
-// import { CartProvider } from './context/CartContext.jsx';
-
-
-
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode>
-//     <CartProvider>
-//     <BrowserRouter>
-//       <App />
-//     </BrowserRouter>
-//     </CartProvider>
-//   </React.StrictMode>
-// );
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -42,6 +24,19 @@ import Message from './studentDashboard/StudentesPages/Message.jsx';
 import Assignment from './studentDashboard/StudentesPages/Assignments.jsx';
 import Settings from './studentDashboard/StudentesPages/Setting.jsx';
 import Logout from './studentDashboard/StudentesPages/LogOut.jsx';
+import InstructorOutlet from './dashboard/instructorDashboard/InstructorOutlet.jsx';
+import InstructorOverview from './dashboard/instructorDashboard/instructorPage/Overview.jsx';
+import InstructorProfile from './dashboard/instructorDashboard/instructorPage/MyProfile.jsx';
+import InstructorCourse from './dashboard/instructorDashboard/instructorPage/MyCourses.jsx';
+import InstructorWishlist from './dashboard/instructorDashboard/instructorPage/Wishlist.jsx';
+import InstructorReviews from './dashboard/instructorDashboard/instructorPage/Reviews.jsx';
+import InstructorMyQuiz from './dashboard/instructorDashboard/instructorPage/MyQuiz.jsx';
+import InstructorMessage from './dashboard/instructorDashboard/instructorPage/Message.jsx';
+import InstructorAnnouncement from './dashboard/instructorDashboard/instructorPage/Announcement.jsx';
+import InstructorOrderHistory from './dashboard/instructorDashboard/instructorPage/OrderHistory.jsx';
+import InstructorAssignment from './dashboard/instructorDashboard/instructorPage/Assignments.jsx';
+import InstructorSettings from './dashboard/instructorDashboard/instructorPage/Setting.jsx';
+import InstructorLogout from './dashboard/instructorDashboard/instructorPage/LogOut.jsx';
 
 const router = createBrowserRouter([
   {
@@ -72,7 +67,27 @@ const router = createBrowserRouter([
      { path: "setting" , element :  <Settings/>},
      { path: "logout" , element :  <Logout/>},
     ],
+  },
+  {path : '/instructor' , element : <InstructorOutlet/> , 
+    children : [
+       { index : true, element : <InstructorOverview/>,},
+     { path: "profile", element : <InstructorProfile/>},
+     { path: "enrollCourse", element : <InstructorCourse/>},
+    //  {path: "courseIntroVideo", element : <CourseIntroVideo/>},
+    //  {path: "courseInfoForm", element : <CourseInfoForm/>},
+     { path: "wishlist", element : <InstructorWishlist/>},
+     { path: "review" , element :  <InstructorReviews/>},
+     { path: "myQuiz" , element :  <InstructorMyQuiz/>},
+     { path:  'mycourses', element:<InstructorCourse/>},
+     { path: "message" , element :  <InstructorMessage/>},
+     { path: "announcement", element : <InstructorAnnouncement/>},
+     { path : 'orderhistory', element : <InstructorOrderHistory/>},
+     { path: "assignments" , element :  <InstructorAssignment/>},
+     { path: "setting" , element :  <InstructorSettings/>},
+     { path: "logout" , element :  <InstructorLogout/>},
+    ]
   }
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

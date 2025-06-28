@@ -25,7 +25,7 @@ const StuTopBar = () => {
         <div>
           <h2 className="text-xl font-semibold pb-2">
             {/* {user?.name || "Student"} */}
-            {user?.name && user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase()}
+            {user?.name && user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase()} Student
 
           </h2>
 
