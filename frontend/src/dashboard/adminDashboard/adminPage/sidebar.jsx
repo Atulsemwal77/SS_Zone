@@ -12,7 +12,7 @@ import {
 import { BiBookBookmark } from "react-icons/bi";
 import { FaCreditCard } from "react-icons/fa";
 
-export default function AdminSideBar() {
+export default function Dashboard() {
   const linkClass = "flex items-center space-x-2 p-2 rounded hover:bg-blue-100";
   const activeClass = "bg-blue-100 text-blue-600";
 
@@ -22,7 +22,7 @@ export default function AdminSideBar() {
       <aside className="w-64 bg-white shadow p-6">
         <nav className="space-y-2 text-gray-600">
           <NavLink
-            to="/admin"
+            to="/"
             end
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
@@ -33,7 +33,7 @@ export default function AdminSideBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/profile"
+            to="/profile"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -43,7 +43,7 @@ export default function AdminSideBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/enrollCourse"
+            to="/enrollCourse"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -53,7 +53,7 @@ export default function AdminSideBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/message"
+            to="/message"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -63,7 +63,7 @@ export default function AdminSideBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/review"
+            to="/review"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -73,7 +73,7 @@ export default function AdminSideBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/quizAttempt"
+            to="/quizAttempt"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -83,7 +83,7 @@ export default function AdminSideBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/category"
+            to="/category"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -93,7 +93,7 @@ export default function AdminSideBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/payment"
+            to="/payment"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -105,7 +105,7 @@ export default function AdminSideBar() {
           <hr className="my-4" />
 
           <NavLink
-            to="/admin/setting"
+            to="/setting"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -115,7 +115,7 @@ export default function AdminSideBar() {
           </NavLink>
 
           <NavLink
-            to="/admin/logout"
+            to="/logout"
             className={({ isActive }) =>
               `${linkClass} ${isActive ? activeClass : ""}`
             }
@@ -126,7 +126,10 @@ export default function AdminSideBar() {
         </nav>
       </aside>
 
-      {/* You can render <Outlet /> or children here if using layout */}
+      {/* Main Content
+      <main className="flex-1 p-6 w-full">
+        
+      </main> */}
     </div>
   );
 }

@@ -37,6 +37,17 @@ import InstructorOrderHistory from './dashboard/instructorDashboard/instructorPa
 import InstructorAssignment from './dashboard/instructorDashboard/instructorPage/Assignments.jsx';
 import InstructorSettings from './dashboard/instructorDashboard/instructorPage/Setting.jsx';
 import InstructorLogout from './dashboard/instructorDashboard/instructorPage/LogOut.jsx';
+import AdminOutlet from './dashboard/adminDashboard/AdminOutlet.jsx';
+import AdminOverview from './dashboard/adminDashboard/adminPage/Overview.jsx';
+import AdminProfile from './dashboard/adminDashboard/adminPage/MyProfile.jsx';
+import AdminCourse from './dashboard/adminDashboard/adminPage/Courses.jsx';
+import AdminMessage from './dashboard/adminDashboard/adminPage/Message.jsx';
+import AdminReviews from './dashboard/adminDashboard/adminPage/Reviews.jsx';
+import AdminQuizAttempt from './dashboard/adminDashboard/adminPage/QuizAttempt.jsx';
+import AdminCategory from './dashboard/adminDashboard/adminPage/Category.jsx';
+import AdminPayment from './dashboard/adminDashboard/adminPage/Payment.jsx';
+import AdminSettings from './dashboard/adminDashboard/adminPage/Setting.jsx';
+import AdminLogout from './dashboard/adminDashboard/adminPage/Logout.jsx';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +96,23 @@ const router = createBrowserRouter([
      { path: "assignments" , element :  <InstructorAssignment/>},
      { path: "setting" , element :  <InstructorSettings/>},
      { path: "logout" , element :  <InstructorLogout/>},
+    ]
+  },
+  {path : '/admin' , element : <AdminOutlet/>,
+    children : [
+      {
+        index : true, element : <AdminOverview/>,
+      },
+     { path: "profile", element : <AdminProfile/>},
+     { path: "enrollCourse", element : <AdminCourse/>},
+     { path: "message" , element :  <AdminMessage/>},
+     
+     { path: "review" , element :  <AdminReviews/>},
+     { path: "quizAttempt" , element :  <AdminQuizAttempt/>},
+     {path : "category", element:<AdminCategory/>},
+     { path: "payment" , element :  <AdminPayment/>},
+     { path: "setting" , element :  <AdminSettings/>},
+     { path: "logout" , element :  <AdminLogout/>},
     ]
   }
 
