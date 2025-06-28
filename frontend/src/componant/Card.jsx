@@ -10,66 +10,51 @@ import "react-toastify/dist/ReactToastify.css";
 
 const CourseList = ({ all_course }) => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND;
-  // Add to wishlist handler
-  // const addToWishlist = async (course) => {
-  //   try {
-
-  //     const response = await axios.post(`${import.meta.env.VITE_BACKEND}wishlist/addToWishlist`, {
-  //       id: course.id,
-  //       image: course.image,
-  //       duration: course.duration,
-  //       title: course.title,
-  //       description: course.description,
-  //       lessons: course.lessons,
-  //       author: course.author,
-  //       rating: course.rating,
-  //       price: course.price,
-  //     });
-
-  //     toast.success("Added to wishlist!" );
-  //     console.log("Wishlist response:", response.data);
-  //   } catch (error) {
-  //     console.error("Error adding to wishlist:", error);
-  //     toast.error("Failed to add to wishlist", );
-  //   }
-  // };
+  
 
   const addToWishlist = async (course) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) {
-      toast.error("Please login to add items into wishlist.");
-      return;
-    }
+  if (!token) {
+    toast.error("Please login to add items into wishlist.");
+    return;
+  }
 
-    try {
-      await axios.post(
-        `${BACKEND_URL}wishlist/addToWishlist`,
-        {
-          id: course.id,
-          image: course.image,
-          duration: course.duration,
-          title: course.title,
-          description: course.description,
-          lessons: course.lessons,
-          author: course.author,
-          rating: course.rating,
-          price: course.price,
+  try {
+    const response = await axios.post(
+      `${BACKEND_URL}wishlist/addToWishlist`,
+      {
+        id: course.id,
+        image: course.image,
+        duration: course.duration,
+        title: course.title,
+        description: course.description,
+        lectures: course.lessons,  // 🔁 changed to match backend field
+        author: course.author,
+        rating: course.rating,
+        price: course.price,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success("Added to Wishlist");
-    } catch (error) {
+      }
+    );
+
+    toast.success("Added to Wishlist");
+    return response.data;  // optional: use this to update UI
+  } catch (error) {
+    if (error.response?.status === 409) {
+      toast.error("Item already exists in the wishlist.");
+    } else {
       const message =
         error.response?.data?.message || error.message || "An error occurred";
       toast.error(message);
     }
-  };
+  }
+};
+
 
   return (
     <div className="px-4 sm:px-10 lg:px-24 font-[Manrope]">

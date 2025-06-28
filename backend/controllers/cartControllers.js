@@ -31,7 +31,7 @@ const add_to_cart = async (req, res) => {
 
     await User.findByIdAndUpdate(
       userId,
-      { $push: { itemPurchased: cartData } },
+      { $push: { itemPurchased: cartData._id } },
       { new: true }
     );
 
@@ -49,17 +49,22 @@ const add_to_cart = async (req, res) => {
 };
 
 const get_cart_items = async (req, res) => {
-  console.log("fetching cart items..");
   try {
     const userId = req.user._id;
 
-    const cartItems = await Cart.find({ userId });
-    console.log("cart items",cartItems)
+    const user = await User.findById(userId).populate("itemPurchased");
+
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "User not found",
+      });
+    }
 
     res.status(200).send({
       success: true,
       message: "Cart items retrieved successfully",
-      data: cartItems,
+      data: user.itemPurchased,  // populated cart items
     });
   } catch (error) {
     res.status(400).send({ success: false, message: error.message });
@@ -68,10 +73,9 @@ const get_cart_items = async (req, res) => {
 
 const delete_cart_item = async (req, res) => {
   try {
-    const userId = req.user._id;          // Authenticated user's ID
-    const itemId = req.params.id;         // Cart item ID from route params
+    const userId = req.user._id;
+    const itemId = req.params.id;
 
-    // Delete only if the item belongs to the user
     const deletedItem = await Cart.findOneAndDelete({
       _id: itemId,
       userId,
@@ -83,6 +87,10 @@ const delete_cart_item = async (req, res) => {
         message: "Item not found or unauthorized",
       });
     }
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: { itemPurchased: itemId }
+    });
 
     res.status(200).send({
       success: true,

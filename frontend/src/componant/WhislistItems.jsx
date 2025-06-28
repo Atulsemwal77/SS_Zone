@@ -1,7 +1,6 @@
 import { FaHeart, FaRegClock, FaRegStar } from "react-icons/fa";
 import { MdCurrencyRupee } from "react-icons/md";
 import { TiDocumentText } from "react-icons/ti";
-import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -10,14 +9,15 @@ import { toast } from "react-toastify";
 function WishlistItems() {
   const [wishlistItems, setWishlistItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState(null);
   const [error, setError] = useState(null);
 
   const fetchWishlist = async () => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      toast.error("Please login to add items into wishlist");
-      setLoading(false); // stop loading if no token
+      toast.error("Please login to view your wishlist.");
+      setLoading(false);
       return;
     }
 
@@ -33,7 +33,7 @@ function WishlistItems() {
       );
       setWishlistItems(res.data.data);
     } catch (error) {
-      console.log("Error in fetching wishlist items:", error);
+      console.log("Error fetching wishlist items:", error);
       setError("Failed to load wishlist items.");
     } finally {
       setLoading(false);
@@ -45,17 +45,19 @@ function WishlistItems() {
   }, []);
 
   const deleteWishlistItems = async (id) => {
+    const token = localStorage.getItem("token");
 
-     const token = localStorage.getItem("token"); 
-     if(!token){
-      toast.error("Please login to add items to cart.");
+    if (!token) {
+      toast.error("Please login to remove items from wishlist.");
       return;
     }
+
+    setDeletingId(id);
 
     try {
       await axios.delete(
         `${import.meta.env.VITE_BACKEND}wishlist/removeWishlistItems/${id}`,
-         {
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -66,6 +68,8 @@ function WishlistItems() {
     } catch (error) {
       console.log("Error removing wishlist item:", error);
       toast.error("Failed to remove item");
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -99,10 +103,12 @@ function WishlistItems() {
             key={index}
             className="max-w-[400px] max-h-[499px] border-1 rounded-[12px] p-4 border-[#E3E3E3] hover:border-[#296AD2] flex flex-col gap-4"
           >
+            {/* Course Thumbnail */}
             <div className="relative w-full">
               <img
                 src={course.image || "/fallback.jpg"}
                 alt={course.title}
+                onError={(e) => (e.target.src = "/fallback.jpg")}
                 className="rounded-[12px] w-full h-[200px] object-cover"
               />
               <div className="absolute top-2 left-4 bg-[#296AD2] py-2 px-[21px] rounded-[40px] flex gap-2 items-center">
@@ -113,12 +119,14 @@ function WishlistItems() {
               </div>
               <button
                 onClick={() => deleteWishlistItems(course._id)}
-                className="cursor-pointer absolute top-2 right-4 bg-[#ffffff] rounded-full p-2"
+                disabled={deletingId === course._id}
+                className="cursor-pointer absolute top-2 right-4 bg-[#ffffff] rounded-full p-2 disabled:opacity-50"
               >
                 <FaHeart className="text-red-600" />
               </button>
             </div>
 
+            {/* Course Info */}
             <div className="font-[Manrope] pb-2">
               <h3 className="pb-3 font-semibold text-[20px] text-[#292929]">
                 {course.title}
@@ -130,7 +138,7 @@ function WishlistItems() {
                 <div className="flex items-center gap-1">
                   <TiDocumentText />
                   <p className="font-semibold text-[16px] text-[#292929]">
-                    {course.lessons} Lessons
+                    {(course.lectures || course.lessons) ?? 0} Lessons
                   </p>
                 </div>
                 <div className="flex items-center gap-1">
@@ -140,6 +148,7 @@ function WishlistItems() {
               </div>
             </div>
 
+            {/* Price and Enroll */}
             <div className="flex justify-between items-center font-[Manrope]">
               <div className="flex items-center">
                 <MdCurrencyRupee className="text-[#F04438] text-[20px]" />
@@ -148,9 +157,7 @@ function WishlistItems() {
                 </p>
               </div>
               <Link to={`/courseDetailsOverview/${course._id}`} state={course}>
-                <button
-                  className="cursor-pointer py-3 px-6 border-1 hover:bg-[#296AD2] hover:text-white border-[#296AD2] text-[#296AD2] font-medium text-[16px] rounded-[4px]"
-                >
+                <button className="cursor-pointer py-3 px-6 border-1 hover:bg-[#296AD2] hover:text-white border-[#296AD2] text-[#296AD2] font-medium text-[16px] rounded-[4px]">
                   Enroll Now
                 </button>
               </Link>

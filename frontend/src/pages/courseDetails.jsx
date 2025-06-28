@@ -160,14 +160,14 @@ if (!token) {
 
   const addToCart = async (course) => {
   const token = localStorage.getItem("token");
-  
+
   if (!token) {
     toast.error("Please login to add items to cart.");
     return;
   }
 
   try {
-    await axios.post(
+    const response = await axios.post(
       `${BACKEND_URL}cart/add-to-cart`,
       {
         id: course.id,
@@ -186,13 +186,19 @@ if (!token) {
         },
       }
     );
+
     toast.success("Added to Cart");
+    return response.data; // Optional, useful if you want to use it later
   } catch (error) {
-    const message =
-      error.response?.data?.message || error.message || "An error occurred";
-    toast.error(message);
+    if (error.response?.status === 409) {
+      toast.error("Item already exists in cart");
+    } else {
+      const message = error.response?.data?.message || error.message || "An error occurred";
+      toast.error(message);
+    }
   }
 };
+
 
 
   return (
