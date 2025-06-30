@@ -20,6 +20,9 @@ const comment_route = require("./routes/commentRouter")
 const setting_route = require('./routes/settingRoute')
 const announcement_route = require('./routes/announcementRoute')
 const auth_Routes = require("./routes/auth.Route")
+const course_route = require("./routes/CourseRoute")
+const module_route = require("./routes/ModuleRoute")
+const additionalInfo_route = require ('./routes/additionalInfoRoute')
 
 app.use('/api/auth', auth_Routes);
 app.use('/api/cart' , cart_route);
@@ -28,6 +31,12 @@ app.use('/api/contact', contact_route)
 app.use('/api/comment', comment_route)
 app.use('/api/setting' , setting_route)
 app.use('/api/ancument' , announcement_route)
+
+app.use("/uploads", express.static("uploads"));
+app.use("/api/courses", course_route);
+app.use('/api', module_route);
+app.use("/api/additional-info", additionalInfo_route);
+
 
 connect();
 
