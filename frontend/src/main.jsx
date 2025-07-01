@@ -48,6 +48,8 @@ import AdminCategory from './dashboard/adminDashboard/adminPage/Category.jsx';
 import AdminPayment from './dashboard/adminDashboard/adminPage/Payment.jsx';
 import AdminSettings from './dashboard/adminDashboard/adminPage/Setting.jsx';
 import AdminLogout from './dashboard/adminDashboard/adminPage/Logout.jsx';
+import ProtectedRoute from './componant/ProtectedRoute.jsx';
+import Login from './dashboard/adminDashboard/adminPage/Login.jsx';
 
 const router = createBrowserRouter([
   {
@@ -98,7 +100,7 @@ const router = createBrowserRouter([
      { path: "logout" , element :  <InstructorLogout/>},
     ]
   },
-  {path : '/admin' , element : <AdminOutlet/>,
+  {path : '/admin' , element : (<ProtectedRoute><AdminOutlet/></ProtectedRoute>),
     children : [
       {
         index : true, element : <AdminOverview/>,
@@ -114,7 +116,8 @@ const router = createBrowserRouter([
      { path: "setting" , element :  <AdminSettings/>},
      { path: "logout" , element :  <AdminLogout/>},
     ]
-  }
+  },
+  {path: "/admin/login", element: <Login/>}
 
 ]);
 

@@ -22,7 +22,9 @@ const announcement_route = require('./routes/announcementRoute')
 const auth_Routes = require("./routes/auth.Route")
 const course_route = require("./routes/CourseRoute")
 const module_route = require("./routes/ModuleRoute")
-const additionalInfo_route = require ('./routes/additionalInfoRoute')
+const additionalInfo_route = require ('./routes/additionalInfoRoute');
+const adminRouter = require("./routes/adminAuthRoute");
+
 
 app.use('/api/auth', auth_Routes);
 app.use('/api/cart' , cart_route);
@@ -37,7 +39,7 @@ app.use("/api/courses", course_route);
 app.use('/api', module_route);
 app.use("/api/additional-info", additionalInfo_route);
 
-
+app.use("/api/admin", adminRouter)
 connect();
 
 const port = process.env.PORT || 4000;
