@@ -3,20 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-function Login() {
+function InstructorLogin() {
   const [loginData, setLoginData] = useState({ email: "", password: ""});
   const navigate = useNavigate(); 
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND}admin/login`,  loginData);
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND}instructor/login`,  loginData);
       
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
       alert("Login Successful")
       toast.success("Login Successful");
-      navigate("/admin");
+      navigate("/instructor");
     } catch (err) {
       alert(err)
       toast.error(err?.response?.data?.message || "Login failed");
@@ -41,4 +41,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default InstructorLogin;
