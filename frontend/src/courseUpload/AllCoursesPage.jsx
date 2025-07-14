@@ -88,13 +88,7 @@ const AllCoursesPage = () => {
                 width="100%"
                 height="360px"
               />
-              <video width="100%" height="360" controls>
-                <source
-                  src={course.videoUrl}
-                  
-                />
-                Your browser does not support the video tag.
-              </video>
+             
             </div>
           )}
 
