@@ -26,7 +26,7 @@ const LessonForm = ({ modules, onLessonAdded }) => {
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/modules/${moduleId}/lessons`,
+        `http://localhost:3999/api/modules/${moduleId}/lessons`,
         lessonData
       );
       onLessonAdded(res.data.lesson);

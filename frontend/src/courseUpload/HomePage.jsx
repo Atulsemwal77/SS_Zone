@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import CourseForm from './CourseForm';
-import CourseIntroVideo from './CourseIntroVideo';
-import ModuleForm from './ModuleForm';
-import LessonForm from './LessonForm';
-import ModuleList from './ModuleList';
-import AdditionalInfo from './AdditionalInfoForm';
-import { Link,useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import CourseForm from "./CourseForm";
+import CourseIntroVideo from "./CourseIntroVideo";
+import ModuleForm from "./ModuleForm";
+import LessonForm from "./LessonForm";
+import ModuleList from "./ModuleList";
+import AdditionalInfo from "./AdditionalInfoForm";
+import { Link, useNavigate } from "react-router-dom";
 
 const Homepage = ({ courseId, setCourseId }) => {
   const [modules, setModules] = useState([]);
@@ -15,7 +15,9 @@ const Homepage = ({ courseId, setCourseId }) => {
   const fetchModules = async () => {
     if (!courseId) return;
     try {
-      const res = await axios.get(`http://localhost:5000/api/courses/${courseId}/full`);
+      const res = await axios.get(
+        `http://localhost:3999/api/courses/${courseId}/full`
+      );
       setModules(res.data.modules || []);
     } catch (err) {
       console.error(err);
@@ -32,7 +34,7 @@ const Homepage = ({ courseId, setCourseId }) => {
       {courseId && (
         <>
           <CourseIntroVideo courseId={courseId} />
-<ModuleForm courseId={courseId} onModuleCreated={fetchModules} />
+          <ModuleForm courseId={courseId} onModuleCreated={fetchModules} />
           <LessonForm modules={modules} onLessonAdded={fetchModules} />
           <ModuleList modules={modules} />
           <AdditionalInfo courseId={courseId} />
@@ -41,11 +43,12 @@ const Homepage = ({ courseId, setCourseId }) => {
             onClick={() => navigate(`/course/${courseId}`)}
           >
             View Full Course
-          </button><br/>
+          </button>
+          <br />
 
-          <Link to="/courses" className="text-blue-600 underline">
-  View All Courses
-</Link>
+          <Link to="/allCourse" className="text-blue-600 underline">
+            View All Courses
+          </Link>
         </>
       )}
     </div>

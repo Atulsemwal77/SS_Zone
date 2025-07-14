@@ -11,7 +11,7 @@ const CourseIntroVideo = ({ courseId,onUploaded  }) => {
     }
 
     try {
-await axios.post(`http://localhost:5000/api/courses/${courseId}/upload-video`, {
+await axios.post(`http://localhost:3999/api/courses/${courseId}/upload-video`, {
         videoUrl
       });
 

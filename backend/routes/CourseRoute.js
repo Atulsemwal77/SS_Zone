@@ -36,7 +36,7 @@ router.post('/create', upload.single('thumbnail'), async (req, res) => {
       regularPrice,
       discountPrice,
       categories: JSON.parse(categories),
-      thumbnail: req.file ? `http://localhost:5000/uploads/${req.file.filename}` : null,
+      thumbnail: req.file ? `http://localhost:3999/uploads/${req.file.filename}` : null,
     });
 
     const saved = await newCourse.save();

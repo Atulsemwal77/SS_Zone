@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReactPlayer from "react-player";
-import LessonVideoPlayer from "./LassonVideoPlayer";
+import LessonVideoPlayer from "../components/LessonVideoPlayer";
 
 const CourseDisplayPage = () => {
   const { id } = useParams();

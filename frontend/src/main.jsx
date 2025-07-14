@@ -52,6 +52,8 @@ import AdminProtectedRoute from './componant/AdminProtectedRoute.jsx';
 import Login from './dashboard/adminDashboard/adminPage/Login.jsx';
 import InstructorLogin from './dashboard/instructorDashboard/instructorPage/InstructorLogin.jsx';
 import InstructorProtectedRoute from './dashboard/instructorDashboard/InstructorProtectedRoute.jsx';
+import AdminCourseAdd from './dashboard/adminDashboard/AdminCourseAdd.jsx';
+import AllCoursesPage from './courseUpload/AllCoursesPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -107,14 +109,17 @@ const router = createBrowserRouter([
     {index : true, element : <AdminOverview/>,},
     { path: "profile", element : <AdminProfile/>},
     { path: "enrollCourse", element : <AdminCourse/>},
+    { path : "courses-add" , element: <AdminCourseAdd/> },
+    {path : 'allCourse' , element : <AllCoursesPage/>},
     { path: "message" , element :  <AdminMessage/>},
     { path: "review" , element :  <AdminReviews/>},
     { path: "quizAttempt" , element :  <AdminQuizAttempt/>},
-    {path : "category", element:<AdminCategory/>},
+    { path : "category", element:<AdminCategory/>},
     { path: "payment" , element :  <AdminPayment/>},
     { path: "setting" , element :  <AdminSettings/>},
     { path: "logout" , element :  <AdminLogout/>},
     ]
+    
   },
   {path: "/admin/login", element: <Login/>},
   { path: "/instructor/login", element : <InstructorLogin/>}

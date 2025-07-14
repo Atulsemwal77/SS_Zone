@@ -1,6 +1,7 @@
 import React from 'react'
 import img1 from "../../assets/image/img.jpg";
 import { FaStar, FaArrowRight } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const AdminTopBar = () => {
   return (
@@ -21,10 +22,11 @@ const AdminTopBar = () => {
               <FaStar className="text-yellow-300" />
               4.0 (120 Reviews)
             </div>
-    
+            <Link to = '/admin/courses-add'>
             <button className=" text-white px-4 py-2 rounded-lg shadow flex items-center gap-2 border border-white">
               Create a New Course <FaArrowRight />
             </button>
+            </Link>
         </div>
     </>
   )

@@ -27,7 +27,7 @@ const AdditionalInfoForm = ({ courseId }) => {
       };
 
       const res = await axios.post(
-        `http://localhost:5000/api/courses/${courseId}/additional-info`,
+        `http://localhost:3999/api/courses/${courseId}/additional-info`,
         payload
       );
 

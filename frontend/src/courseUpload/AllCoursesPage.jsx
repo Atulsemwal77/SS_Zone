@@ -1,4 +1,3 @@
-// 📁 src/pages/AllCoursesPage.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReactPlayer from "react-player";
@@ -10,7 +9,9 @@ const AllCoursesPage = () => {
   useEffect(() => {
     const fetchAllCourses = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/courses/all/full");
+        const res = await axios.get(
+          "http://localhost:3999/api/courses/all/full"
+        );
         setCourses(res.data);
       } catch (err) {
         console.error("Error fetching courses", err);
@@ -19,7 +20,8 @@ const AllCoursesPage = () => {
     fetchAllCourses();
   }, []);
 
-  if (courses.length === 0) return <div className="text-center p-8">Loading courses...</div>;
+  if (courses.length === 0)
+    return <div className="text-center p-8">Loading courses...</div>;
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-12">
@@ -42,22 +44,57 @@ const AllCoursesPage = () => {
 
           {/* Course Info */}
           <div>
-            <p><strong>Slug:</strong> {course.slug}</p>
-            <p><strong>Categories:</strong> {course.categories?.join(", ")}</p>
-            <p><strong>Price:</strong> ₹{course.discountPrice} <span className="line-through text-gray-400">₹{course.regularPrice}</span></p>
-            <p><strong>Language:</strong> {course.language}</p>
-            <p><strong>Start Date:</strong> {course.startDate}</p>
-            <p><strong>Requirements:</strong> {course.requirements}</p>
-            <p><strong>Description:</strong> {course.description}</p>
-            <p><strong>Duration:</strong> {course.durationHour}h {course.durationMinute}m</p>
-            <p><strong>Tags:</strong> {course.tags?.join(", ")}</p>
+            <p>
+              <strong>Slug:</strong> {course.slug}
+            </p>
+            <p>
+              <strong>Categories:</strong> {course.categories?.join(", ")}
+            </p>
+            <p>
+              <strong>Price:</strong> ₹{course.discountPrice}{" "}
+              <span className="line-through text-gray-400">
+                ₹{course.regularPrice}
+              </span>
+            </p>
+            <p>
+              <strong>Language:</strong> {course.language}
+            </p>
+            <p>
+              <strong>Start Date:</strong> {course.startDate}
+            </p>
+            <p>
+              <strong>Requirements:</strong> {course.requirements}
+            </p>
+            <p>
+              <strong>Description:</strong> {course.description}
+            </p>
+            <p>
+              <strong>Duration:</strong> {course.durationHour}h{" "}
+              {course.durationMinute}m
+            </p>
+            <p>
+              <strong>Tags:</strong> {course.tags?.join(", ")}
+            </p>
           </div>
 
           {/* Intro Video */}
           {course.videoUrl && (
             <div>
               <h3 className="text-lg font-semibold">Course Intro Video</h3>
-              <ReactPlayer url={course.videoUrl} controls width="100%" height="360px" />
+                {console.log("course url this id " +  course.videoUrl)}
+              <ReactPlayer
+                url={course.videoUrl}
+                controls
+                width="100%"
+                height="360px"
+              />
+              <video width="100%" height="360" controls>
+                <source
+                  src={course.videoUrl}
+                  
+                />
+                Your browser does not support the video tag.
+              </video>
             </div>
           )}
 

@@ -1,111 +1,137 @@
-
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "axios";
-import ReactPlayer from "react-player";
-import LessonVideoPlayer from "./LassonVideoPlayer";
 
-const CourseDisplayPage = () => {
-  const { id } = useParams();
-  const [course, setCourse] = useState(null);
+const CourseForm = ({ onCourseCreated }) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    slug: "",
+    description: "",
+    regularPrice: "",
+    discountPrice: "",
+    categories: "",
+    thumbnail: null,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:5000/api/courses/${id}/full`
-        );
-        setCourse(res.data);
-      } catch (error) {
-        console.error("Failed to fetch course data", error);
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "thumbnail") {
+      setFormData({ ...formData, thumbnail: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === "categories") {
+        data.append(key, JSON.stringify(value.split(",")));
+      } else {
+        data.append(key, value);
       }
-    };
-    fetchData();
-  }, [id]);
+    });
 
-  if (!course) return <div className="text-center p-8">Loading...</div>;
+    try {
+      const response = await axios.post(
+        "http://localhost:3999/api/courses/create",
+        data
+      );
+      alert("✅ Course created successfully!");
+      // Call the callback to store new ID
+      if (onCourseCreated) onCourseCreated(response.data._id);
+    } catch (err) {
+      console.error(err);
+      alert("❌ Failed to create course");
+    }
+  };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-10">
-      {/* Course Thumbnail and Title */}
-      <div className="space-y-4">
-        {course.thumbnail && (
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-2xl mx-auto p-6 mt-8 bg-white shadow rounded space-y-4"
+    >
+      <h2 className="text-xl font-bold">Course Info</h2>
+
+      <div className="grid grid-cols-2 gap-4">
+        <input
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          placeholder="Course Title"
+          className="input"
+        />
+        <input
+          name="slug"
+          value={formData.slug}
+          onChange={handleChange}
+          placeholder="Course Slug"
+          className="input"
+        />
+      </div>
+
+      <textarea
+        name="description"
+        value={formData.description}
+        onChange={handleChange}
+        placeholder="About Course"
+        className="input h-24"
+      />
+
+      <div className="grid grid-cols-2 gap-4">
+        <input
+          type="number"
+          name="regularPrice"
+          value={formData.regularPrice}
+          onChange={handleChange}
+          placeholder="Regular Price (₹)"
+          className="input"
+        />
+        <input
+          type="number"
+          name="discountPrice"
+          value={formData.discountPrice}
+          onChange={handleChange}
+          placeholder="Discount Price (₹)"
+          className="input"
+        />
+      </div>
+
+      <input
+        name="categories"
+        value={formData.categories}
+        onChange={handleChange}
+        placeholder="Categories (comma-separated)"
+        className="input"
+      />
+
+      <div className="border-2 border-dashed p-4 text-center">
+        <input
+          type="file"
+          name="thumbnail"
+          accept="image/*"
+          onChange={handleChange}
+        />
+        <p className="text-sm text-gray-500">Choose an image (700x430px)</p>
+
+        {formData.thumbnail && typeof formData.thumbnail !== "string" && (
           <img
-            src={course.thumbnail}
-            alt="Thumbnail"
-            className="w-full h-64 object-cover rounded"
+            src={URL.createObjectURL(formData.thumbnail)}
+            alt="Preview"
+            className="mt-4 mx-auto h-40 object-cover rounded"
           />
         )}
-
-        <h1 className="text-3xl font-bold">{course.title}</h1>
-        {/* <p className="text-sm text-gray-500">Course ID: {course._id}</p> */}
       </div>
 
-      {/* Course Info Section */}
-      <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-xl font-semibold mb-4">Course Info</h2>
-        <p>
-          <strong>Slug:</strong> {course.slug}
-        </p>
-        <p>
-          <strong>Categories:</strong> {course.categories?.join(", ")}
-        </p>
-        <p>
-          <strong>Price:</strong> ₹{course.discountPrice}{" "}
-          <span className="line-through text-gray-400">
-            ₹{course.regularPrice}
-          </span>
-        </p>
-        <p>
-          <strong>Language:</strong> {course.language}
-        </p>
-        <p>
-          <strong>Start Date:</strong> {course.startDate}
-        </p>
-        <p>
-          <strong>Requirements:</strong> {course.requirements}
-        </p>
-        <p>
-          <strong>Description:</strong> {course.description}
-        </p>
-        <p>
-          <strong>Duration:</strong> {course.durationHour}h{" "}
-          {course.durationMinute}m
-        </p>
-        <p>
-          <strong>Tags:</strong> {course.tags?.join(", ")}
-        </p>
-      </div>
-
-      {/* Intro Video Section */}
-      {course.videoUrl && (
-        <div className="bg-white p-6 rounded shadow">
-          <h2 className="text-xl font-semibold mb-4">Course Intro Video</h2>
-          <ReactPlayer
-            url={course.videoUrl}
-            controls
-            width="100%"
-            height="360px"
-          />
-        </div>
-      )}
-
-      {/* Modules & Lessons Section */}
-      <div className="bg-white p-6 rounded shadow">
-        <h2 className="text-xl font-semibold mb-4">Modules & Lessons</h2>
-        {course.modules?.map((module) => (
-          <div key={module._id} className="mb-6">
-            <h3 className="font-semibold text-lg">{module.title}</h3>
-            <ul className="list-disc pl-5 mt-2">
-              {module.lessons?.map((lesson) => (
-                <LessonVideoPlayer key={lesson._id} lesson={lesson} />
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </div>
+      <button
+        type="submit"
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Create Course
+      </button>
+    </form>
   );
 };
 
-export default CourseDisplayPage;
+export default CourseForm;
