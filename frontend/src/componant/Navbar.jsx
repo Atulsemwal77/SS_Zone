@@ -64,6 +64,7 @@ function Navbaar() {
       const res = await axios.post(`${import.meta.env.VITE_BACKEND}auth/login`, loginData);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.result));
+      localStorage.setItem("role", res.data.role);
       setUser(res.data.result);
       toast.success("Login Successful");
       setShowLogin(false);
