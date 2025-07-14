@@ -48,6 +48,10 @@ import AdminCategory from './dashboard/adminDashboard/adminPage/Category.jsx';
 import AdminPayment from './dashboard/adminDashboard/adminPage/Payment.jsx';
 import AdminSettings from './dashboard/adminDashboard/adminPage/Setting.jsx';
 import AdminLogout from './dashboard/adminDashboard/adminPage/Logout.jsx';
+import AdminProtectedRoute from './componant/AdminProtectedRoute.jsx';
+import Login from './dashboard/adminDashboard/adminPage/Login.jsx';
+import InstructorLogin from './dashboard/instructorDashboard/instructorPage/InstructorLogin.jsx';
+import InstructorProtectedRoute from './dashboard/instructorDashboard/InstructorProtectedRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -79,7 +83,7 @@ const router = createBrowserRouter([
      { path: "logout" , element :  <Logout/>},
     ],
   },
-  {path : '/instructor' , element : <InstructorOutlet/> , 
+  {path : '/instructor' , element : (<InstructorProtectedRoute><InstructorOutlet/></InstructorProtectedRoute>) , 
     children : [
        { index : true, element : <InstructorOverview/>,},
      { path: "profile", element : <InstructorProfile/>},
@@ -98,7 +102,7 @@ const router = createBrowserRouter([
      { path: "logout" , element :  <InstructorLogout/>},
     ]
   },
-  {path : '/admin' , element : <AdminOutlet/>,
+  {path : '/admin' , element : (<AdminProtectedRoute><AdminOutlet/></AdminProtectedRoute>),
     children : [
     {index : true, element : <AdminOverview/>,},
     { path: "profile", element : <AdminProfile/>},
@@ -112,7 +116,9 @@ const router = createBrowserRouter([
     { path: "logout" , element :  <AdminLogout/>},
     ]
   },
-  
+  {path: "/admin/login", element: <Login/>},
+  { path: "/instructor/login", element : <InstructorLogin/>}
+
 
 ]);
 

@@ -15,9 +15,9 @@ router.post('/signup', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
     const result = await User.create({ email, password: hashedPassword , name});
-    const token = jwt.sign({ email: result.email, id: result._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ email: result.email, id: result._id, role: "USER" }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(201).json({ result, token });
+    res.status(200).json({ result: existingUser, token, role: "USER" });
   } catch (err) {
     res.status(500).json({ message: 'Something went wrong' });
   }
