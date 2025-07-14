@@ -100,21 +100,19 @@ const router = createBrowserRouter([
   },
   {path : '/admin' , element : <AdminOutlet/>,
     children : [
-      {
-        index : true, element : <AdminOverview/>,
-      },
-     { path: "profile", element : <AdminProfile/>},
-     { path: "enrollCourse", element : <AdminCourse/>},
-     { path: "message" , element :  <AdminMessage/>},
-     
-     { path: "review" , element :  <AdminReviews/>},
-     { path: "quizAttempt" , element :  <AdminQuizAttempt/>},
-     {path : "category", element:<AdminCategory/>},
-     { path: "payment" , element :  <AdminPayment/>},
-     { path: "setting" , element :  <AdminSettings/>},
-     { path: "logout" , element :  <AdminLogout/>},
+    {index : true, element : <AdminOverview/>,},
+    { path: "profile", element : <AdminProfile/>},
+    { path: "enrollCourse", element : <AdminCourse/>},
+    { path: "message" , element :  <AdminMessage/>},
+    { path: "review" , element :  <AdminReviews/>},
+    { path: "quizAttempt" , element :  <AdminQuizAttempt/>},
+    {path : "category", element:<AdminCategory/>},
+    { path: "payment" , element :  <AdminPayment/>},
+    { path: "setting" , element :  <AdminSettings/>},
+    { path: "logout" , element :  <AdminLogout/>},
     ]
-  }
+  },
+  
 
 ]);
 
