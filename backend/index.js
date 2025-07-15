@@ -40,6 +40,7 @@ app.use("/api/courses", course_route);
 app.use('/api', module_route);
 app.use("/api/additional-info", additionalInfo_route);
 
+
 app.use("/api/admin", adminRouter)
 
 app.use("/api/instructor", instructorRouter)

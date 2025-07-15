@@ -7,6 +7,7 @@ import LessonForm from "./LessonForm";
 import ModuleList from "./ModuleList";
 import AdditionalInfo from "./AdditionalInfoForm";
 import { Link, useNavigate } from "react-router-dom";
+import Overview from "./OverView";
 
 const Homepage = ({ courseId, setCourseId }) => {
   const [modules, setModules] = useState([]);
@@ -38,6 +39,7 @@ const Homepage = ({ courseId, setCourseId }) => {
           <LessonForm modules={modules} onLessonAdded={fetchModules} />
           <ModuleList modules={modules} />
           <AdditionalInfo courseId={courseId} />
+          <Overview courseId={courseId}/>
           <button
             className="mt-6 bg-blue-600 text-white px-6 py-2 rounded"
             onClick={() => navigate(`/course/${courseId}`)}

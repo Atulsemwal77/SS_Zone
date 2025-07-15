@@ -1,16 +1,16 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const Course = require('../models/CourseModel');
+const multer = require("multer");
+const path = require("path");
+const Course = require("../models/CourseModel");
 
 // Multer storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // make sure 'uploads' exists
+    cb(null, "uploads/"); // make sure 'uploads' exists
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + file.originalname;
+    const uniqueSuffix = Date.now() + "-" + file.originalname;
     cb(null, uniqueSuffix);
   },
 });
@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // CREATE course
-router.post('/create', upload.single('thumbnail'), async (req, res) => {
+router.post("/create", upload.single("thumbnail"), async (req, res) => {
   try {
     const {
       title,
@@ -26,7 +26,7 @@ router.post('/create', upload.single('thumbnail'), async (req, res) => {
       description,
       regularPrice,
       discountPrice,
-      categories
+      categories,
     } = req.body;
 
     const newCourse = new Course({
@@ -36,18 +36,20 @@ router.post('/create', upload.single('thumbnail'), async (req, res) => {
       regularPrice,
       discountPrice,
       categories: JSON.parse(categories),
-      thumbnail: req.file ? `http://localhost:3999/uploads/${req.file.filename}` : null,
+      thumbnail: req.file
+        ? `http://localhost:3999/uploads/${req.file.filename}`
+        : null,
     });
 
     const saved = await newCourse.save();
     res.json(saved);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Failed to create course' });
+    res.status(500).json({ error: "Failed to create course" });
   }
 });
 // Add this route in your courseroutes.js
-router.post('/:id/additional-info', async (req, res) => {
+router.post("/:id/additional-info", async (req, res) => {
   try {
     const {
       language,
@@ -75,14 +77,13 @@ router.post('/:id/additional-info', async (req, res) => {
 
     res.json(updatedCourse);
   } catch (err) {
-    console.error('Error updating additional info:', err);
-    res.status(500).json({ message: 'Error updating course additional info' });
+    console.error("Error updating additional info:", err);
+    res.status(500).json({ message: "Error updating course additional info" });
   }
 });
 
 
-// Update video URL
-router.post('/:id/upload-video', async (req, res) => {
+router.post("/:id/upload-video", async (req, res) => {
   try {
     const { videoUrl } = req.body;
     const course = await Course.findByIdAndUpdate(
@@ -92,50 +93,87 @@ router.post('/:id/upload-video', async (req, res) => {
     );
     res.json(course);
   } catch (err) {
-    res.status(500).json({ message: 'Error uploading video', error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error uploading video", error: err.message });
   }
 });
 
-router.get('/all/full', async (req, res) => {
+router.get("/all/full", async (req, res) => {
   try {
-    const allCourses = await Course.find().sort({createdAt:-1})
+    const allCourses = await Course.find()
+      .sort({ createdAt: -1 })
       .populate({
-        path: 'modules',
-        populate: { path: 'lessons' }
+        path: "modules",
+        populate: { path: "lessons" },
       });
-      
+
     res.json(allCourses);
   } catch (err) {
-    console.error("❌ Error in /api/courses/all/full:", err); // This will help debug
-    res.status(500).json({ message: "Error getting course", error: err.message });
+    console.error("❌ Error in /api/courses/all/full:", err); 
+    res
+      .status(500)
+      .json({ message: "Error getting course", error: err.message });
   }
 });
 
-// Get full course with modules and lessons populated
-router.get('/:id/full', async (req, res) => {
+
+router.get("/:id/full", async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id)
-      .populate({
-        path: 'modules',
-        populate: {
-          path: 'lessons'
-        }
-      });
+    const course = await Course.findById(req.params.id).populate({
+      path: "modules",
+      populate: {
+        path: "lessons",
+      },
+    });
 
     if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
+      return res.status(404).json({ message: "Course not found" });
     }
 
     res.json(course);
   } catch (err) {
-    console.error('Error fetching full course:', err);
-    res.status(500).json({ message: 'Error getting course' });
+    console.error("Error fetching full course:", err);
+    res.status(500).json({ message: "Error getting course" });
   }
 });
 
+router.post("/:id/course-overview", async (req, res) => {
+  try {
+    const {
+      overviewdescription,
+      whatYouWillLearn,
+      overviewinstructor,
+      videoHours,
+      courseLevel,
+      overviewlanguage,
+      quizzes,
+      certificate,
+      accessOnMobileAndTV,
+    } = req.body;
 
-
-
-
+    const updateOverview = await Course.findByIdAndUpdate(
+      req.params.id,
+      {
+        overviewdescription,
+        whatYouWillLearn,
+        overviewinstructor,
+        videoHours,
+        courseLevel,
+        overviewlanguage,
+        quizzes,
+        certificate,
+        accessOnMobileAndTV,
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(updateOverview);
+  } catch (error) {
+    console.error("Error updating additional info:", err);
+    res.status(500).json({ message: "Error updating course additional info" });
+  }
+});
 
 module.exports = router;

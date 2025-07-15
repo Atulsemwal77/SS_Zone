@@ -15,7 +15,42 @@ const courseSchema = new mongoose.Schema({
   durationMinute: Number,
   tags: [String],
   videoUrl: String,
-  modules: [{ type: mongoose.Schema.Types.ObjectId, ref: "Module" }]
+  modules: [{ type: mongoose.Schema.Types.ObjectId, ref: "Module" }],
+
+  overviewdescription: {
+    type: String,
+  },
+  whatYouWillLearn: {
+    type: String,
+  },
+  overviewinstructor: {
+    type: String,
+  },
+  videoHours: {
+    type: Number,
+  },
+  courseLevel: {
+    type: String,
+    enum: ["Beginner", "Intermediate", "Advanced"],
+    default: "Beginner",
+  },
+  overviewlanguage: {
+    type: String,
+    default: "English",
+  },
+  quizzes: {
+    type: Number,
+    default: 0,
+  },
+  certificate: {
+    type: Boolean,
+    default: false,
+  },
+  accessOnMobileAndTV: {
+    type: Boolean,
+    default: true,
+  }
+
 }, { timestamps: true });
 
 module.exports = mongoose.model("Course", courseSchema);
