@@ -63,7 +63,7 @@ const CourseForm = ({ onCourseCreated }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3999/api/courses/create",
+        `${import.meta.env.VITE_BACKEND}courses/create`,
         data
       );
       toast.success("✅ Course created successfully!");

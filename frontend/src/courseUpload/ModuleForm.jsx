@@ -7,7 +7,7 @@ const ModuleForm = ({ courseId, onModuleCreated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3999/api/modules", {
+      await axios.post(`${import.meta.env.VITE_BACKEND}modules`, {
         title,
         courseId,
       });

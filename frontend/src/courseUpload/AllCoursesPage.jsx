@@ -9,7 +9,7 @@ const AllCoursesPage = () => {
   useEffect(() => {
     const fetchAllCourses = async () => {
       try {
-        const res = await axios.get("http://localhost:3999/api/courses/all/full");
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND}courses/all/full`);
         setCourses(res.data);
       } catch (err) {
         console.error("Error fetching courses", err);

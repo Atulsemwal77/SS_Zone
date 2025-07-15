@@ -61,7 +61,7 @@ const LessonForm = ({ modules, onLessonAdded }) => {
 
     try {
       const res = await axios.post(
-        `http://localhost:3999/api/modules/${moduleId}/lessons`,
+        `${import.meta.env.VITE_BACKEND}modules/${moduleId}/lessons`,
         lessonData
       );
 
