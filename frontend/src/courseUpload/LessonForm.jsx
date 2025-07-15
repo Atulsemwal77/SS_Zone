@@ -187,14 +187,14 @@ const LessonForm = ({ modules, onLessonAdded }) => {
         <div className="text-right">
           <button
             type="submit"
-            className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition duration-200"
+            className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200"
           >
             Add Lesson
           </button>
         </div>
       </form>
 
-      <ToastContainer position="top-right" autoClose={2000} />
+      <ToastContainer position="top-right" autoClose={2000}   closeOnClick />
     </>
   );
 };

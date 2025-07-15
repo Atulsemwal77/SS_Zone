@@ -36,8 +36,8 @@ const Homepage = ({ courseId, setCourseId }) => {
         <>
           <CourseIntroVideo courseId={courseId} />
           <ModuleForm courseId={courseId} onModuleCreated={fetchModules} />
-          <LessonForm modules={modules} onLessonAdded={fetchModules} />
           <ModuleList modules={modules} />
+          <LessonForm modules={modules} onLessonAdded={fetchModules} />
           <AdditionalInfo courseId={courseId} />
           <Overview courseId={courseId}/>
           <button

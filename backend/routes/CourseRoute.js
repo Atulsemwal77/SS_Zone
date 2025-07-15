@@ -117,7 +117,7 @@ router.get("/all/full", async (req, res) => {
   }
 });
 
-
+// Get full course with modules and lessons populated
 router.get("/:id/full", async (req, res) => {
   try {
     const course = await Course.findById(req.params.id).populate({

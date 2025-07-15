@@ -56,12 +56,14 @@ const CourseIntroVideo = ({ courseId, onUploaded }) => {
               </p>
             </div>
 
-            <button
+           <div className="text-right">
+             <button
               onClick={handleUploadVideo}
               className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition duration-200"
             >
               Upload Video
             </button>
+           </div>
           </div>
         </details>
       </div>

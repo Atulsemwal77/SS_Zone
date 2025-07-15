@@ -4,12 +4,8 @@ const cors = require("cors")
 const { connect } = require("./config/database");
 require('dotenv').config();
 
-
 const app = express();
 
-// Use body-parser middleware
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())
 
@@ -27,7 +23,7 @@ const adminRouter = require("./routes/adminAuthRoute");
 const instructorRouter = require("./routes/instructorRoute");
 
 
-app.use('/api/auth', auth_Routes);
+app.use('/api/auth', auth_Routes);  //student
 app.use('/api/cart' , cart_route);
 app.use('/api/wishlist', wishlist_route)
 app.use('/api/contact', contact_route)
@@ -35,15 +31,16 @@ app.use('/api/comment', comment_route)
 app.use('/api/setting' , setting_route)
 app.use('/api/ancument' , announcement_route)
 
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));  //multer 
 app.use("/api/courses", course_route);
 app.use('/api', module_route);
 app.use("/api/additional-info", additionalInfo_route);
 
 
-app.use("/api/admin", adminRouter)
 
+app.use("/api/admin", adminRouter)
 app.use("/api/instructor", instructorRouter)
+
 connect();
 
 const port = process.env.PORT || 4000;

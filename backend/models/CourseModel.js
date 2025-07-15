@@ -49,6 +49,12 @@ const courseSchema = new mongoose.Schema({
   accessOnMobileAndTV: {
     type: Boolean,
     default: true,
+  },
+
+  status: {
+    type: String,
+    enum: ["Published", "Pending"],
+    default: "Pending",
   }
 
 }, { timestamps: true });
