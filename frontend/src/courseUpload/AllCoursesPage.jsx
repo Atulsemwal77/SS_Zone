@@ -28,7 +28,9 @@ const AllCoursesPage = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-12">
-      <h1 className="text-3xl font-bold text-center">All Courses {courses.length}</h1>
+      <h1 className="text-3xl font-bold text-center">
+        All Courses {courses.length}
+      </h1>
 
       {courses.map((course) => (
         <div
@@ -62,6 +64,7 @@ const AllCoursesPage = () => {
                 ₹{course.regularPrice}
               </span>
             </p>
+
             <p>
               <strong>Language:</strong> {course.language}
             </p>
@@ -82,46 +85,44 @@ const AllCoursesPage = () => {
               <strong>Tags:</strong> {course.tags?.join(", ")}
             </p>
           </div>
-            {/* Overview Section */}
-            <div className="bg-gray-50 p-4 rounded-md space-y-2 border border-gray-200">
-              <h3 className="text-lg font-semibold text-blue-700">
-                📝 Course Overview
-              </h3>
+          {/* Overview Section */}
+          <div className="bg-gray-50 p-4 rounded-md space-y-2 border border-gray-200">
+            <h3 className="text-lg font-semibold text-blue-700">
+              📝 Course Overview
+            </h3>
 
-              <p>
-                <strong>Description:</strong>{" "}
-                {course.overviewdescription || "N/A"}
-              </p>
-              <p>
-                <strong>What You'll Learn:</strong>{" "}
-                {course.whatYouWillLearn || "N/A"}
-              </p>
-              <p>
-                <strong>Instructor:</strong>{" "}
-                {course.overviewinstructor || "N/A"}
-              </p>
-              <p>
-                <strong>Video Hours:</strong> {course.videoHours || "N/A"}
-              </p>
-              <p>
-                <strong>Level:</strong> {course.courseLevel || "N/A"}
-              </p>
-              <p>
-                <strong>Language:</strong> {course.overviewlanguage || "N/A"}
-              </p>
-              <p>
-                <strong>Quizzes:</strong> {course.quizzes || 0}
-              </p>
-              <p>
-                <strong>Certificate:</strong>{" "}
-                {course.certificate ? "✅ Yes" : "❌ No"}
-              </p>
-              <p>
-                <strong>Access on Mobile & TV:</strong>{" "}
-                {course.accessOnMobileAndTV ? "✅ Yes" : "❌ No"}
-              </p>
-            </div>
-          
+            <p>
+              <strong>Description:</strong>{" "}
+              {course.overviewdescription || "N/A"}
+            </p>
+            <p>
+              <strong>What You'll Learn:</strong>{" "}
+              {course.whatYouWillLearn || "N/A"}
+            </p>
+            <p>
+              <strong>Instructor:</strong> {course.overviewinstructor || "N/A"}
+            </p>
+            <p>
+              <strong>Video Hours:</strong> {course.videoHours || "N/A"}
+            </p>
+            <p>
+              <strong>Level:</strong> {course.courseLevel || "N/A"}
+            </p>
+            <p>
+              <strong>Language:</strong> {course.overviewlanguage || "N/A"}
+            </p>
+            <p>
+              <strong>Quizzes:</strong> {course.quizzes || 0}
+            </p>
+            <p>
+              <strong>Certificate:</strong>{" "}
+              {course.certificate ? "✅ Yes" : "❌ No"}
+            </p>
+            <p>
+              <strong>Access on Mobile & TV:</strong>{" "}
+              {course.accessOnMobileAndTV ? "✅ Yes" : "❌ No"}
+            </p>
+          </div>
 
           {/* Course Intro Video */}
           {course.videoUrl && ReactPlayer.canPlay(course.videoUrl) && (
@@ -147,6 +148,17 @@ const AllCoursesPage = () => {
                 className="mt-4 border border-gray-200 p-4 rounded"
               >
                 <h4 className="font-bold text-blue-600 mb-2">{module.title}</h4>
+                <span className="text-sm text-gray-500 font-normal">
+                  ({module.lessons?.length || 0} Lessons)
+                </span>
+                <p className="text-md font-medium mt-2 text-green-600">
+                  Total Lessons:{" "}
+                  {course.modules?.reduce(
+                    (sum, module) => sum + (module.lessons?.length || 0),
+                    0
+                  ) || 0}
+                </p>
+
                 <ul className="list-disc pl-5 space-y-1 text-sm">
                   {module.lessons?.length > 0 ? (
                     module.lessons.map((lesson) => (

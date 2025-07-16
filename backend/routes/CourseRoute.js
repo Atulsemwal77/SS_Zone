@@ -110,7 +110,7 @@ router.get("/all/full", async (req, res) => {
 
     res.json(allCourses);
   } catch (err) {
-    console.error("❌ Error in /api/courses/all/full:", err); 
+    console.error("❌ Error in /api/courses/all/full:", err); // This will help debug
     res
       .status(500)
       .json({ message: "Error getting course", error: err.message });
