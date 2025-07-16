@@ -8,11 +8,18 @@ import { MdCurrencyRupee } from "react-icons/md";
 import { FaDribbble, FaLinkedin, FaTwitter } from "react-icons/fa";
 import ReactPlayer from "react-player";
 import LessonVideoPlayer from "../../../courseUpload/LassonVideoPlayer";
+import EditCourseModal from "../../../courseUpload/CourseEdit";
 
 const AdminCourseDetails = () => {
   const location = useLocation();
   const course = location.state;
-  
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [updatedCourse, setUpdatedCourse] = useState(course);
+
+  const handleUpdated = (newData) => {
+    setUpdatedCourse(newData);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,8 +44,8 @@ const AdminCourseDetails = () => {
         </p>
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">What You Will Learn</h1>
-          {course.whatYouWillLearn || " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem, tenetur voluptatem maiores ex alias libero in inventore? Nam, vitae amet. Assumenda non autem dolore earum nobis. Non perferendis maxime aliquam." }
-         
+          {course.whatYouWillLearn ||
+            " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem, tenetur voluptatem maiores ex alias libero in inventore? Nam, vitae amet. Assumenda non autem dolore earum nobis. Non perferendis maxime aliquam."}
         </div>
       </div>
     ),
@@ -60,12 +67,12 @@ const AdminCourseDetails = () => {
           ))}
         </div> */}
         <p className="text-md font-medium mt-2 text-green-600">
-              Total Lessons:{" "}
-              {course.modules?.reduce(
-                (sum, module) => sum + (module.lessons?.length || 0),
-                0
-              ) || 0}
-            </p>
+          Total Lessons:{" "}
+          {course.modules?.reduce(
+            (sum, module) => sum + (module.lessons?.length || 0),
+            0
+          ) || 0}
+        </p>
         {course.modules?.map((module) => (
           <div
             key={module._id}
@@ -75,7 +82,6 @@ const AdminCourseDetails = () => {
             {/* <span className="text-sm text-gray-500 font-normal">
               ({module.lessons?.length || 0} Lessons)
             </span> */}
-            
 
             <ul className="list-disc pl-5 space-y-1 text-sm">
               {module.lessons?.length > 0 ? (
@@ -109,7 +115,9 @@ const AdminCourseDetails = () => {
     ),
     Review: (
       <div className="px-6 md:px-12 my-6">
-        <p className="text-gray-600">No reviews yet.  review added from enroll student</p>
+        <p className="text-gray-600">
+          No reviews yet. review added from enroll student
+        </p>
       </div>
     ),
   };
@@ -120,12 +128,12 @@ const AdminCourseDetails = () => {
         <img
           src={course.thumbnail}
           alt="Course Banner"
-          className="h-[50vh] md:h-[70vh] w-full object-cover rounded"
+          className="h-[50vh] md:h-[70vh] w-full object-contain object-center rounded"
         />
       </div>
 
       <div className="relative">
-        <div className="shadow-lg bg-white px-6 py-4 max-w-3xl md:mx-6 mx-auto rounded-xl -mt-20 md:-mt-10">
+        <div className="shadow-lg bg-white px-6 py-4 max-w-3xl md:mx-6 mx-auto rounded-xl  md:-mt-10">
           <h1 className="text-2xl font-bold mb-3">{course.title}</h1>
           <div className="flex flex-wrap md:flex-nowrap gap-6">
             <div className="flex-1">
@@ -170,7 +178,7 @@ const AdminCourseDetails = () => {
           <div>{content[activeTab]}</div>
         </div>
 
-        <aside className="w-full md:w-[400px] flex-shrink-0 shadow-lg p-6 rounded-xl bg-white -mt-43 ">
+        <aside className="w-full md:w-[400px] flex-shrink-0 shadow-lg p-4 rounded-xl bg-white lg:-mt-43 -mt-10 ">
           {/* <img src={video} alt="Demo Video" className="rounded-md mb-6" /> */}
           {course.videoUrl && ReactPlayer.canPlay(course.videoUrl) && (
             <div>
@@ -185,13 +193,11 @@ const AdminCourseDetails = () => {
               />
             </div>
           )}
-          <div className="flex items-center justify-center mb-4">
+          <div className="flex items-center ">
             <MdCurrencyRupee className="h-6 w-6" />
             <h2 className="text-2xl font-bold">{course.regularPrice}</h2>
           </div>
-          <button className="cursor-pointer w-full bg-blue-700 text-white py-3 rounded-lg mb-6 hover:bg-blue-800">
-            Add To Cart
-          </button>
+          <p className="text-xl font-semibold mb-2"> This Course Includes </p>
           <div className="flex flex-col gap-2 text-gray-600">
             <p>✅ {course.videoHours}h on-demand video</p>
             <p>✅ Instructor: {course.overviewinstructor}</p>
@@ -218,18 +224,30 @@ const AdminCourseDetails = () => {
               <FaTwitter />
             </a>
           </div>
+          <div className="mt-4">
+            <button className="border w-full  p-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600 ">
+              Edit Course
+            </button>
+            <button className="border w-full  p-1 text-blue-500 rounded-lg mt-2">
+              Delete Course
+            </button>
+            <button
+              className="border w-full mt-4 p-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Edit Course
+            </button>
+
+            {isModalOpen && (
+              <EditCourseModal
+                course={updatedCourse}
+                onClose={() => setIsModalOpen(false)}
+                onUpdated={handleUpdated}
+              />
+            )}
+          </div>
         </aside>
       </div>
-
-      {/* <div className="px-6 md:px-12 my-20 text-center">
-        <h2 className="text-blue-500 text-sm">Explore Recommended Courses</h2>
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">You Might Also Like</h1>
-        <p className="text-gray-600 mb-12">
-          Discover personalized course recommendations curated to match your interests and learning goals.
-        </p>
-        
-        <Card all_course={all_course.slice(0, 3)} />
-      </div> */}
     </>
   );
 };

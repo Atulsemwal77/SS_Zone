@@ -48,7 +48,49 @@ router.post("/create", upload.single("thumbnail"), async (req, res) => {
     res.status(500).json({ error: "Failed to create course" });
   }
 });
-// Add this route in your courseroutes.js
+
+router.put("/update/:id", upload.single("thumbnail"), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      slug,
+      description,
+      regularPrice,
+      discountPrice,
+      categories,
+    } = req.body;
+
+    const updateFields = {
+      title,
+      slug,
+      description,
+      regularPrice,
+      discountPrice,
+      categories: JSON.parse(categories),
+    };
+
+    // If a new thumbnail is uploaded, update it
+    if (req.file) {
+      updateFields.thumbnail = `http://localhost:3999/uploads/${req.file.filename}`;
+    }
+
+    const updatedCourse = await Course.findByIdAndUpdate(id, updateFields, {
+      new: true,
+    });
+
+    if (!updatedCourse) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    res.json(updatedCourse);
+  } catch (err) {
+    console.error("Error updating course:", err);
+    res.status(500).json({ error: "Failed to update course" });
+  }
+});
+
+
 router.post("/:id/additional-info", async (req, res) => {
   try {
     const {
@@ -81,6 +123,48 @@ router.post("/:id/additional-info", async (req, res) => {
     res.status(500).json({ message: "Error updating course additional info" });
   }
 });
+router.put("/:id/additional-info", async (req, res) => {
+  try {
+    const {
+      language,
+      startDate,
+      requirements,
+      description,
+      durationHour,
+      durationMinute,
+      tags,
+    } = req.body;
+
+    const updateData = {
+      language,
+      startDate,
+      requirements,
+      description,
+      durationHour,
+      durationMinute,
+    };
+
+    // Safely parse tags
+    if (tags) {
+      updateData.tags = typeof tags === "string" ? JSON.parse(tags) : tags;
+    }
+
+    const updatedCourse = await Course.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedCourse) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    res.json(updatedCourse);
+  } catch (err) {
+    console.error("❌ Error updating additional info:", err);
+    res.status(500).json({ message: "Error updating course additional info" });
+  }
+});
 
 
 router.post("/:id/upload-video", async (req, res) => {
@@ -98,6 +182,110 @@ router.post("/:id/upload-video", async (req, res) => {
       .json({ message: "Error uploading video", error: err.message });
   }
 });
+router.put("/:id/upload-video", async (req, res) => {
+  try {
+    const { videoUrl } = req.body;
+
+    const course = await Course.findByIdAndUpdate(
+      req.params.id,
+      { videoUrl },
+      { new: true }
+    );
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    res.json(course);
+  } catch (err) {
+    console.error("Video upload error:", err);
+    res.status(500).json({ message: "Error uploading video", error: err.message });
+  }
+});
+
+
+router.post("/:id/course-overview", async (req, res) => {
+  try {
+    const {
+      overviewdescription,
+      whatYouWillLearn,
+      overviewinstructor,
+      videoHours,
+      courseLevel,
+      overviewlanguage,
+      quizzes,
+      certificate,
+      accessOnMobileAndTV,
+    } = req.body;
+
+    const updateOverview = await Course.findByIdAndUpdate(
+      req.params.id,
+      {
+        overviewdescription,
+        whatYouWillLearn,
+        overviewinstructor,
+        videoHours,
+        courseLevel,
+        overviewlanguage,
+        quizzes,
+        certificate,
+        accessOnMobileAndTV,
+      },
+      {
+        new: true,
+      }
+    );
+    res.json(updateOverview);
+  } catch (error) {
+    console.error("Error updating additional info:", err);
+    res.status(500).json({ message: "Error updating course additional info" });
+  }
+});
+
+router.put("/:id/course-overview", async (req, res) => {
+  try {
+    const {
+      overviewdescription,
+      whatYouWillLearn,
+      overviewinstructor,
+      videoHours,
+      courseLevel,
+      overviewlanguage,
+      quizzes,
+      certificate,
+      accessOnMobileAndTV,
+    } = req.body;
+
+    const updateData = {
+      overviewdescription,
+      whatYouWillLearn,
+      overviewinstructor,
+      videoHours,
+      courseLevel,
+      overviewlanguage,
+      quizzes,
+      certificate,
+      accessOnMobileAndTV,
+    };
+
+    const updateOverview = await Course.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updateOverview) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    res.json(updateOverview);
+  } catch (error) {
+    console.error("Error updating course overview:", error);
+    res.status(500).json({ message: "Error updating course overview" });
+  }
+});
+
+
 
 router.get("/all/full", async (req, res) => {
   try {
@@ -138,42 +326,8 @@ router.get("/:id/full", async (req, res) => {
   }
 });
 
-router.post("/:id/course-overview", async (req, res) => {
-  try {
-    const {
-      overviewdescription,
-      whatYouWillLearn,
-      overviewinstructor,
-      videoHours,
-      courseLevel,
-      overviewlanguage,
-      quizzes,
-      certificate,
-      accessOnMobileAndTV,
-    } = req.body;
 
-    const updateOverview = await Course.findByIdAndUpdate(
-      req.params.id,
-      {
-        overviewdescription,
-        whatYouWillLearn,
-        overviewinstructor,
-        videoHours,
-        courseLevel,
-        overviewlanguage,
-        quizzes,
-        certificate,
-        accessOnMobileAndTV,
-      },
-      {
-        new: true,
-      }
-    );
-    res.json(updateOverview);
-  } catch (error) {
-    console.error("Error updating additional info:", err);
-    res.status(500).json({ message: "Error updating course additional info" });
-  }
-});
+
+
 
 module.exports = router;
