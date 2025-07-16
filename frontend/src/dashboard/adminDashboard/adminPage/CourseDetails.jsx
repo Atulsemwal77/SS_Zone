@@ -30,44 +30,7 @@ const AdminCourseDetails = () => {
     return <div className="text-center text-red-600 font-bold p-10">❌ Course not found!</div>;
   }
 
-  const addToCart = async (course) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      toast.error("Please login to add items to cart.");
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        `${BACKEND_URL}cart/add-to-cart`,
-        {
-          id: course.id,
-          title: course.title,
-          author: course.author,
-          rating: course.rating,
-          duration: course.duration,
-          lectures: course.lessons,
-          price: course.price,
-          image: course.image,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      toast.success("Added to Cart");
-      return response.data;
-    } catch (error) {
-      if (error.response?.status === 409) {
-        toast.error("Item already exists in cart");
-      } else {
-        toast.error(error.message || "Error adding to cart");
-      }
-    }
-  };
+  
 
   const content = {
     Overview: (
@@ -186,7 +149,7 @@ const AdminCourseDetails = () => {
             <h2 className="text-2xl font-bold">{course.price}</h2>
           </div>
           <button
-            onClick={() => addToCart(course)}
+            
             className="cursor-pointer w-full bg-blue-700 text-white py-3 rounded-lg mb-6 hover:bg-blue-800"
           >
             Add To Cart

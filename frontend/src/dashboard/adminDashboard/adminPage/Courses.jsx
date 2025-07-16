@@ -1,7 +1,9 @@
-// src/pages/Admin/AdminCourse.jsx
 import React, { useState } from "react";
 import img1 from "../../../assets/image/img1.png";
 import { Link } from "react-router-dom";
+import { FaBook, FaClock, FaRegStar, FaTimes } from "react-icons/fa";
+import { HiOutlineClock } from "react-icons/hi";
+
 
 const coursesData = [
   {
@@ -15,7 +17,79 @@ const coursesData = [
     image: img1,
     price: 4999,
     price2: 11999,
-    description: "Master JavaScript through imagination-based interactive learning.",
+    description:
+      "Master JavaScript through imagination-based interactive learning.",
+    status: "published",
+  },
+  {
+    id: 2,
+    title: "Mastering React Basics",
+    author: "Anjali",
+    rating: 4.5,
+    reviews: 5,
+    lessons: 30,
+    duration: "06 Weeks",
+    image: img1,
+    price: 5999,
+    price2: 12999,
+    description: "Build modern UI with React and hooks.",
+    status: "published",
+  },
+  {
+    id: 3,
+    title: "Backend with Node.js & MongoDB",
+    author: "Vikram",
+    rating: 4.7,
+    reviews: 8,
+    lessons: 40,
+    duration: "07 Weeks",
+    image: img1,
+    price: 6999,
+    price2: 13999,
+    description: "Learn to build full stack applications.",
+    status: "published",
+  },
+  {
+    id: 4,
+    title: "Java Programming Essentials",
+    author: "Priya",
+    rating: 4.1,
+    reviews: 3,
+    lessons: 28,
+    duration: "05 Weeks",
+    image: img1,
+    price: 4499,
+    price2: 9999,
+    description: "Learn Java syntax and OOPs basics.",
+    status: "pending",
+  },
+  {
+    id: 5,
+    title: "Python for Data Analysis",
+    author: "Rahul",
+    rating: 4.3,
+    reviews: 4,
+    lessons: 35,
+    duration: "06 Weeks",
+    image: img1,
+    price: 5299,
+    price2: 10999,
+    description: "Use Python to clean, analyze, and visualize data.",
+    status: "pending",
+  },
+  {
+    id: 6,
+    title: "UI/UX Design Fundamentals",
+    author: "Sneha",
+    rating: 4.0,
+    reviews: 2,
+    lessons: 20,
+    duration: "04 Weeks",
+    image: img1,
+    price: 3999,
+    price2: 8999,
+    description: "Learn UI/UX basics for websites and apps.",
+    status: "pending",
   },
 ];
 
@@ -30,69 +104,80 @@ const TabButton = ({ label, active, onClick }) => (
   </button>
 );
 
+
 const CourseCard = ({ data }) => (
   <div className="bg-white p-4 rounded-lg shadow-md w-72">
     <div className="relative">
-      <img src={data.image} alt="course" className="w-full h-40 object-cover rounded-md" />
-      <button className="absolute top-2 right-2 text-red-500 text-xl">🤍</button>
+      <img
+        src={data.image}
+        alt="course"
+        className="w-full h-40 object-cover rounded-md"
+      />
+      <button className="absolute top-2 left-2 text-white  py-1 px-2 bg-[#296AD2] rounded-2xl text-sm">
+        {" "}
+        <span className="flex items-center  gap-1">
+          {" "}
+          <HiOutlineClock /> {data.duration}
+        </span>
+      </button>
     </div>
-    <span className="text-xs inline-block bg-blue-100 text-blue-600 rounded-full px-2 py-1 mt-2">
-      Development
-    </span>
-    <div className="flex items-center justify-between text-sm text-gray-500 mt-1">
-      <div className="flex items-center">
-        <img
-          src="https://i.pravatar.cc/24"
-          alt="avatar"
-          className="w-5 h-5 rounded-full mr-2"
-        />
-        {data.author}
-      </div>
-      <div>
-        <span className="ml-2 text-yellow-500">★ {data.rating}</span>
-        <span className="ml-1">({data.reviews} Reviews)</span>
-      </div>
+    <h2 className="text-[18px] font-semibold mt-2">{data.title}</h2>
+    <p className="text-gray-600 text-md">{data.description}</p>
+    <div className="flex justify-between  mt-2">
+      <span className="flex items-center gap-1">
+        {" "}
+        <FaBook /> {data.lessons} Lessons
+      </span>
+      <span className="ml-2 flex gap-1 items-center text-base">
+        {" "}
+        <FaRegStar className="text-yellow-500" /> {data.rating}
+      </span>
     </div>
-    <h2 className="text-md font-semibold mt-2">{data.title}</h2>
-    <div className="py-2">
-      <p className="text-[14px] text-red-600">
-        ₹ {data.price}
-        <span className="text-[12px] text-black line-through pl-2">₹ {data.price2}</span>
-      </p>
+    <div className="flex justify-between items-center mt-2">
+      <p className="text-lg text-green-600">₹ {data.price} </p>
+      <Link
+        to={`/admin/adminCourseDetails/${data.id}`}
+        state={data}
+        className="flex  mt-4 text-[#296AD2] hover:underline "
+      >
+        <span className="border  p-2">View Details</span>
+      </Link>
     </div>
-    <div className="flex gap-6 text-sm text-gray-600 mt-2">
-      <span>📘 {data.lessons} Lessons</span>
-      <span>⏱ {data.duration}</span>
-    </div>
-    <Link
-      to={`/admin/adminCourseDetails/${data.id}`}
-      state={data}
-      className="block mt-4 text-blue-600 hover:underline"
-    >
-      Go to full Course
-    </Link>
   </div>
 );
 
 const AdminCourse = () => {
   const [activeTab, setActiveTab] = useState("published");
 
-  const renderContent = () => (
-    <div className="flex flex-wrap gap-4 mt-6">
-      {coursesData.map((course, i) => (
-        <CourseCard key={i} data={course} />
-      ))}
-    </div>
+  const filteredCourses = coursesData.filter(
+    (course) => course.status === activeTab
   );
 
   return (
     <div className="p-6 font-sans">
       <h1 className="text-2xl font-bold mb-4">Enroll Courses</h1>
       <div className="flex space-x-6 border-b pb-2">
-        <TabButton label="Published" active={activeTab === "published"} onClick={() => setActiveTab("published")} />
-        <TabButton label="Pending" active={activeTab === "pending"} onClick={() => setActiveTab("pending")} />
+        <TabButton
+          label="Published"
+          active={activeTab === "published"}
+          onClick={() => setActiveTab("published")}
+        />
+        <TabButton
+          label="Pending"
+          active={activeTab === "pending"}
+          onClick={() => setActiveTab("pending")}
+        />
       </div>
-      {renderContent()}
+
+      <div className="flex flex-wrap gap-4 mt-6">
+        {filteredCourses.length === 0 ? (
+          <p>No courses found for {activeTab}.</p>
+        ) : (
+          filteredCourses.map((course) => (
+            <CourseCard key={course.id} data={course} />
+          ))
+        )}
+      </div>
     </div>
   );
 };
