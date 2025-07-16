@@ -54,6 +54,7 @@ import InstructorLogin from './dashboard/instructorDashboard/instructorPage/Inst
 import InstructorProtectedRoute from './dashboard/instructorDashboard/InstructorProtectedRoute.jsx';
 import AdminCourseAdd from './dashboard/adminDashboard/AdminCourseAdd.jsx';
 import AllCoursesPage from './courseUpload/AllCoursesPage.jsx';
+import AdminCourseDetails from './dashboard/adminDashboard/adminPage/courseDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -109,6 +110,7 @@ const router = createBrowserRouter([
     {index : true, element : <AdminOverview/>,},
     { path: "profile", element : <AdminProfile/>},
     { path: "enrollCourse", element : <AdminCourse/>},
+    { path : "adminCourseDetails/:id" ,element : <AdminCourseDetails/>},
     { path : "courses-add" , element: <AdminCourseAdd/> },
     {path : 'allCourse' , element : <AllCoursesPage/>},
     { path: "message" , element :  <AdminMessage/>},
