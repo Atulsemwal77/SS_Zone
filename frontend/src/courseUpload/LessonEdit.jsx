@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { AiOutlineClose } from "react-icons/ai";
+
 
 const LessonEditModal = ({ lesson, onClose, onLessonUpdated }) => {
   const [formData, setFormData] = useState({ ...lesson });
@@ -36,7 +38,7 @@ const LessonEditModal = ({ lesson, onClose, onLessonUpdated }) => {
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
           onClick={onClose}
         >
-          ❌
+          ❌ <AiOutlineClose size={22} />
         </button>
 
         <form onSubmit={handleSubmit} className="space-y-4">

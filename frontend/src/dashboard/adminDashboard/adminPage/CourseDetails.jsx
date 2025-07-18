@@ -52,20 +52,7 @@ const AdminCourseDetails = () => {
     Curriculum: (
       <div className="px-6 md:px-12 my-6">
         <h2 className="text-xl font-bold mb-4">Course Modules</h2>
-        {/* <div className="flex flex-col gap-2 border border-gray-300 max-w-4xl">
-          {[
-            "HTML, CSS Basics",
-            "JavaScript Essentials",
-            "React Basics",
-            "Node.js and Express",
-            "MongoDB Integration",
-            "Deployment",
-          ].map((module, index) => (
-            <h2 key={index} className="p-3 border-b flex justify-between items-center">
-              {module} <img src={arrow} alt="arrow" className="w-5" />
-            </h2>
-          ))}
-        </div> */}
+        
         <p className="text-md font-medium mt-2 text-green-600">
           Total Lessons:{" "}
           {course.modules?.reduce(
@@ -86,7 +73,10 @@ const AdminCourseDetails = () => {
             <ul className="list-disc pl-5 space-y-1 text-sm">
               {module.lessons?.length > 0 ? (
                 module.lessons.map((lesson) => (
-                  <LessonVideoPlayer key={lesson._id} lesson={lesson} />
+                  <>
+                  
+                  <LessonVideoPlayer key={lesson._id} lesson={lesson} modules={course.modules} />
+                  </>
                 ))
               ) : (
                 <li className="text-gray-400 italic">

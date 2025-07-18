@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdCancel } from "react-icons/md";
+
 
 const EditCourseModal = ({ course, onClose, onUpdated }) => {
   const [formData, setFormData] = useState({
@@ -37,7 +39,7 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
       );
 
       toast.success("✅ Course updated!");
-      //   onUpdated(response.data); // pass updated course to parent
+      onUpdated(response.data); // pass updated course to parent
       //   onClose(); // close modal
     } catch (err) {
       console.error(err);
@@ -143,8 +145,17 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center flex-wrap gap-10 items-center h-screen-2xl z-50">
-        <div className="bg-white rounded-lg p-6 w-full max-w-xl shadow-lg space-y-4 relative">
+      <div className="fixed inset-0  bg-gray-300  flex justify-center flex-wrap gap-10 items-center  overflow-y-scroll z-50">
+        <div className="bg-white rounded-lg p-6 w-full max-w-3xl shadow-lg space-y-4 relative mt-4">
+          <div className="flex justify-end mt-4 sticky top-4 ">
+            <button
+              type="button"
+              onClick={onClose}
+              className=""
+            >
+              ❌
+            </button>
+          </div>
           <h2 className="text-xl font-bold text-gray-800">📝 Edit Course</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Title */}
@@ -298,31 +309,25 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
                 type="submit"
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
-                Save Changes
+                Update Course
               </button>
-              <button
+              {/* <button
                 type="button"
                 onClick={onClose}
                 className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
               >
                 Cancel
-              </button>
+              </button> */}
             </div>
           </form>
-        </div>
 
-        <div className="bg-white rounded-lg p-6 w-full max-w-xl shadow-lg space-y-4 relative">
           <h2 className="text-xl font-bold text-gray-800">
             📝 Edit Additional Information
           </h2>
           <form
             onSubmit={additionalhandleSubmit}
-            className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow space-y-4"
+            className="  bg-white  space-y-4"
           >
-            <h2 className="text-xl font-bold text-gray-700">
-              🛠 Update Additional Info
-            </h2>
-
             {/* Language */}
             <div>
               <label className="block font-medium mb-1">Language</label>
@@ -422,72 +427,70 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
               Update Info
             </button>
           </form>
-        </div>
 
-        <form
-          onSubmit={overviewhandleSubmit}
-          className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow space-y-4 mt-8"
-        >
-          <h2 className="text-xl font-bold text-gray-700">
-            📘 Update Course Overview
-          </h2>
+          <form onSubmit={overviewhandleSubmit} className=" space-y-4 mt-8">
+            <h2 className="text-xl font-bold text-gray-700">
+              📘 Update Course Overview
+            </h2>
 
-          {/* Overview Description */}
-          <div>
-            <label className="block font-medium mb-1">
-              Overview Description
-            </label>
-            <textarea
-              name="overviewdescription"
-              value={overviewData.overviewdescription}
-              onChange={overviewhandleChange}
-              rows={4}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+            {/* Overview Description */}
+            <div>
+              <label className="block font-medium mb-1">
+                Overview Description
+              </label>
+              <textarea
+                name="overviewdescription"
+                value={overviewData.overviewdescription}
+                onChange={overviewhandleChange}
+                rows={4}
+                className="w-full border p-2 rounded"
+              />
+            </div>
 
-          {/* What You Will Learn */}
-          <div>
-            <label className="block font-medium mb-1">
-              What You Will Learn
-            </label>
-            <textarea
-              name="whatYouWillLearn"
-              value={overviewData.whatYouWillLearn}
-              onChange={overviewhandleChange}
-              rows={3}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+            {/* What You Will Learn */}
+            <div>
+              <label className="block font-medium mb-1">
+                What You Will Learn
+              </label>
+              <textarea
+                name="whatYouWillLearn"
+                value={overviewData.whatYouWillLearn}
+                onChange={overviewhandleChange}
+                rows={3}
+                className="w-full border p-2 rounded"
+              />
+            </div>
 
-          {/* Instructor Name */}
-          <div>
-            <label className="block font-medium mb-1">Instructor Name</label>
-            <input
-              type="text"
-              name="overviewinstructor"
-              value={overviewData.overviewinstructor}
-              onChange={overviewhandleChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+            {/* Instructor Name */}
+            <div>
+              <label className="block font-medium mb-1">Instructor Name</label>
+              <input
+                type="text"
+                name="overviewinstructor"
+                value={overviewData.overviewinstructor}
+                onChange={overviewhandleChange}
+                className="w-full border p-2 rounded"
+              />
+            </div>
 
-          {/* Video Hours */}
-          <div>
-            <label className="block font-medium mb-1">Total Video Hours</label>
-            <input
-              type="text"
-              name="videoHours"
-              value={overviewData.videoHours}
-              onChange={overviewhandleChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+            {/* Video Hours */}
+            <div>
+              <label className="block font-medium mb-1">
+                Total Video Hours
+              </label>
+              <input
+                type="text"
+                name="videoHours"
+                value={overviewData.videoHours}
+                onChange={overviewhandleChange}
+                className="w-full border p-2 rounded"
+              />
+            </div>
 
-          {/* Course Level */}
-          <div>
-            <label className="block font-medium mb-1">Course Level</label>
-            {/* <input
+            {/* Course Level */}
+            <div>
+              <label className="block font-medium mb-1">Course Level</label>
+              {/* <input
           type="text"
           name="courseLevel"
           value={overviewData.courseLevel}
@@ -495,33 +498,35 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
           className="w-full border p-2 rounded"
           placeholder="Beginner / Intermediate / Expert"
         /> */}
-            <select
-              name="courseLevel"
-              value={overviewData.courseLevel}
-              onChange={overviewhandleChange}
-              className="w-full border p-2 rounded-md"
-            >
-              <option>Beginner</option>
-              <option>Intermediate</option>
-              <option>Advanced</option>
-            </select>
-          </div>
+              <select
+                name="courseLevel"
+                value={overviewData.courseLevel}
+                onChange={overviewhandleChange}
+                className="w-full border p-2 rounded-md"
+              >
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+              </select>
+            </div>
 
-          {/* Language */}
-          <div>
-            <label className="block font-medium mb-1">Overview Language</label>
-            <input
-              type="text"
-              name="overviewlanguage"
-              value={overviewData.overviewlanguage}
-              onChange={overviewhandleChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+            {/* Language */}
+            <div>
+              <label className="block font-medium mb-1">
+                Overview Language
+              </label>
+              <input
+                type="text"
+                name="overviewlanguage"
+                value={overviewData.overviewlanguage}
+                onChange={overviewhandleChange}
+                className="w-full border p-2 rounded"
+              />
+            </div>
 
-          {/* Checkboxes */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <label className="flex items-center gap-2">
+            {/* Checkboxes */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* <label className="flex items-center gap-2">
               <input
                 type="checkbox"
                 name="quizzes"
@@ -529,67 +534,75 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
                 onChange={overviewhandleChange}
               />
               Includes Quizzes
-            </label>
+            </label> */}
 
-            <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  name="certificate"
+                  checked={overviewData.certificate}
+                  onChange={overviewhandleChange}
+                />
+                Certificate Provided
+              </label>
+
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  name="accessOnMobileAndTV"
+                  checked={overviewData.accessOnMobileAndTV}
+                  onChange={overviewhandleChange}
+                />
+                Access on Mobile & TV
+              </label>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Update Overview
+            </button>
+          </form>
+
+          <form onSubmit={vdohandleSubmit} className="space-y-4 mt-8">
+            <h2 className="text-xl font-bold text-gray-700">
+              📹 Upload Course Video URL
+            </h2>
+
+            <div>
+              <label className="block font-medium mb-1">
+                Video URL (YouTube, Vimeo, etc.)
+              </label>
               <input
-                type="checkbox"
-                name="certificate"
-                checked={overviewData.certificate}
-                onChange={overviewhandleChange}
+                type="text"
+                name="videoUrl"
+                value={videoUrl}
+                onChange={(e) => setVideoUrl(e.target.value)}
+                placeholder="https://example.com/video"
+                className="w-full border p-2 rounded"
               />
-              Certificate Provided
-            </label>
+            </div>
 
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                name="accessOnMobileAndTV"
-                checked={overviewData.accessOnMobileAndTV}
-                onChange={handleChange}
-              />
-              Access on Mobile & TV
-            </label>
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Upload Video
+            </button>
+          </form>
+
+          <div className="flex justify-end mt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+            >
+              Cancel
+            </button>
           </div>
-
-          {/* Submit */}
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Update Overview
-          </button>
-        </form>
-
-        <form
-          onSubmit={vdohandleSubmit}
-          className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow space-y-4 mt-8"
-        >
-          <h2 className="text-xl font-bold text-gray-700">
-            📹 Upload Course Video URL
-          </h2>
-
-          <div>
-            <label className="block font-medium mb-1">
-              Video URL (YouTube, Vimeo, etc.)
-            </label>
-            <input
-              type="text"
-              name="videoUrl"
-              value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
-              placeholder="https://example.com/video"
-              className="w-full border p-2 rounded"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Upload Video
-          </button>
-        </form>
+        </div>
       </div>
       <ToastContainer position="top-right" autoClose={2000} />
     </>
