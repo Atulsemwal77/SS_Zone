@@ -38,7 +38,7 @@ const LessonEditModal = ({ lesson, onClose, onLessonUpdated }) => {
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
           onClick={onClose}
         >
-          ❌ <AiOutlineClose size={22} />
+           <AiOutlineClose size={22} />
         </button>
 
         <form onSubmit={handleSubmit} className="space-y-4">

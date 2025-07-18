@@ -321,6 +321,37 @@ router.get("/:id/full", async (req, res) => {
   }
 });
 
+router.put('/status/:id', async(req , res)=>{
+  try {
+    const {id} = req.params;
+    const {status} = req.body;
+
+    if(!["Published", "Pending"].includes(status)){
+      return res.status(400).json({
+        message : "Invalid Status Value"
+      });
+    }
+
+    const updated = await Course.findByIdAndUpdate(id , {status}, {new : true})
+
+    if (!updated) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Course status updated",
+      course: updated,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to update course status",
+      error: err.message,
+    });
+  }
+});
+
 router.delete("/delete/:id", async (req, res) => {
   try {
     const { id } = req.params;

@@ -40,7 +40,7 @@ const Homepage = ({ courseId, setCourseId }) => {
           <LessonForm modules={modules} onLessonAdded={fetchModules} />
           <AdditionalInfo courseId={courseId} />
           <Overview courseId={courseId}/>
-          <button
+          {/* <button
             className="mt-6 bg-blue-600 text-white px-6 py-2 rounded"
             onClick={() => navigate(`/course/${courseId}`)}
           >
@@ -50,7 +50,7 @@ const Homepage = ({ courseId, setCourseId }) => {
 
           <Link to="/allCourse" className="text-blue-600 underline">
             View All Courses
-          </Link>
+          </Link> */}
         </>
       )}
     </div>

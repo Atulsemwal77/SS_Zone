@@ -197,7 +197,7 @@ const categories = [
 ];
 
 function Home() {
-  const [active, setActive] = useState("All Categories");
+  const [active, setActive] = useState("All-Categories");
   const [activeIndex, setActiveIndex] = useState(null);
 
   const toggle = (index) => {

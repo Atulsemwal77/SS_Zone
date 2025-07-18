@@ -65,6 +65,24 @@ const AdminCourseDetails = () => {
     }
   };
 
+  const handleStatusUpdate = async (courseId, newStatus) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:3999/api/courses/status/${courseId}`,
+        { status: newStatus }
+      );
+
+      if (res.status === 200) {
+        toast.success(`✅ Status updated to ${newStatus}`);
+        navigate("/admin/enrollCourse");
+        // Optionally refetch or update local state
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("❌ Failed to update course status");
+    }
+  };
+
   const content = {
     Overview: (
       <div className="px-6 md:px-12 my-6">
@@ -83,7 +101,7 @@ const AdminCourseDetails = () => {
       <div className="px-6 md:px-12 my-6">
         <h2 className="text-xl font-bold mb-4">Course Modules</h2>
 
-        <p className="text-md font-medium mt-2 text-green-600">
+        <p className="text-md font-medium mt-2 text-gray-400">
           Total Lessons:{" "}
           {course.modules?.reduce(
             (sum, module) => sum + (module.lessons?.length || 0),
@@ -95,10 +113,7 @@ const AdminCourseDetails = () => {
             key={module._id}
             className="mt-4 border border-gray-200 p-4 rounded"
           >
-            <h4 className="font-bold text-blue-600 mb-2">{module.title}</h4>
-            {/* <span className="text-sm text-gray-500 font-normal">
-              ({module.lessons?.length || 0} Lessons)
-            </span> */}
+            <h4 className="font-bold text-lg mb-2">{module.title}</h4>
 
             <ul className="list-disc pl-5 space-y-1 text-sm">
               {module.lessons?.length > 0 ? (
@@ -248,23 +263,34 @@ const AdminCourseDetails = () => {
             </a>
           </div>
           <div className="mt-4">
+            {course.status === "Pending" && (
+              <>
+                <button
+                  className="border w-full mt-4 p-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Edit Course
+                </button>
+                <button
+                  className="border w-full p-1 text-blue-500 rounded-lg mt-2"
+                  onClick={handleDelete}
+                >
+                  Delete Course
+                </button>
+              </>
+            )}
+
+            <p className="mt-2 text-gray-600">Status Update</p>
             <button
-              className="border w-full mt-4 p-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() =>
+                handleStatusUpdate(
+                  course._id,
+                  course.status === "Published" ? "Pending" : "Published"
+                )
+              }
+              className=" w-full p-1 border rounded-lg  text-white bg-blue-500 hover:bg-blue-600"
             >
-              Edit Course
-            </button>
-            <button
-              className="border w-full p-1 text-blue-500 rounded-lg mt-2"
-              onClick={handleDelete}
-            >
-              Delete Course
-            </button>
-            <button
-              className="border w-full p-1 text-blue-500 rounded-lg mt-2"
-              onClick={handleDelete}
-            >
-              Status Update
+              {course.status === "Published" ? "Unpublish" : "Publish"}
             </button>
 
             {isModalOpen && (

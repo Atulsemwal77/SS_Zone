@@ -58,7 +58,7 @@ const AdminCourse = () => {
         </div>
       </div>
 
-      <div className="grid gap-8 grid-cols-2 sm:grid-cols-1 lg:grid-cols-3 mt-6 px-4 mb-8">
+      <div className="grid gap-8 grid-cols-1 lg:grid-cols-3 mt-6 px-4 mb-8">
         {filteredCoursesMain.length === 0 ? (
           <p className="col-span-full text-center text-gray-500 text-lg">
             No courses found for {activeTab}.
