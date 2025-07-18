@@ -13,6 +13,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ModuleForm from "../../../courseUpload/ModuleForm";
+import LessonForm from "../../../courseUpload/LessonForm";
 
 const AdminCourseDetails = () => {
   const location = useLocation();
@@ -20,6 +22,10 @@ const AdminCourseDetails = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedCourse, setUpdatedCourse] = useState(course);
+
+  const [isAddModuleOpen, setIsAddModuleOpen] = useState(false);
+  const [isAddLessonOpen, setIsAddLessonOpen] = useState(false);
+  const [selectedModuleId, setSelectedModuleId] = useState(null);
 
   const handleUpdated = (newData) => {
     setUpdatedCourse(newData);
@@ -38,6 +44,20 @@ const AdminCourseDetails = () => {
       </div>
     );
   }
+
+  const fetchCourseDetails = async () => {
+    try {
+      const res = await axios.get(
+        `http://localhost:3999/api/courses/${course._id}`
+      );
+      if (res.status === 200) {
+        setUpdatedCourse(res.data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch course:", err);
+      toast.error("❌ Failed to load updated course");
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -101,30 +121,86 @@ const AdminCourseDetails = () => {
       <div className="px-6 md:px-12 my-6">
         <h2 className="text-xl font-bold mb-4">Course Modules</h2>
 
+        <div className="flex justify-end gap-4 mb-4">
+          <button
+            onClick={() => setIsAddLessonOpen(true)}
+            className="  px-4 py-1 rounded border"
+          >
+            ➕ Add Lesson
+          </button>
+          <button
+            onClick={() => setIsAddModuleOpen(true)}
+            className=" border px-4 py-1 rounded"
+          >
+            ➕ Add Module
+          </button>
+        </div>
+
+        {isAddLessonOpen && (
+          <div className="border p-4 mt-4 rounded bg-gray-50 relative">
+            <button
+              onClick={() => setIsAddLessonOpen(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-2xl"
+            >
+              &times;
+            </button>
+
+            <LessonForm
+              courseId={course._id}
+              modules={updatedCourse.modules}
+              onClose={() => setIsAddLessonOpen(false)}
+              onLessonAdded={() => {
+                fetchCourseDetails();
+                setIsAddLessonOpen(false);
+                toast.success("✅ Lesson added!");
+              }}
+            />
+          </div>
+        )}
+
+        {isAddModuleOpen && (
+          <div className="border p-4 mt-4 rounded bg-gray-50 relative">
+            <button
+              onClick={() => setIsAddModuleOpen(false)}
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl"
+            >
+              &times;
+            </button>
+
+            <ModuleForm
+              courseId={course._id}
+              onClose={() => setIsAddModuleOpen(false)}
+              onModuleAdded={() => {
+                fetchCourseDetails();
+                toast.success("✅ Module added!");
+              }}
+            />
+          </div>
+        )}
+
         <p className="text-md font-medium mt-2 text-gray-400">
           Total Lessons:{" "}
-          {course.modules?.reduce(
+          {updatedCourse.modules?.reduce(
             (sum, module) => sum + (module.lessons?.length || 0),
             0
           ) || 0}
         </p>
-        {course.modules?.map((module) => (
+
+        {updatedCourse.modules?.map((module) => (
           <div
             key={module._id}
             className="mt-4 border border-gray-200 p-4 rounded"
           >
-            <h4 className="font-bold text-lg mb-2">{module.title}</h4>
+            <h4 className="font-bold text-lg">{module.title}</h4>
 
-            <ul className="list-disc pl-5 space-y-1 text-sm">
+            <ul className="list-disc pl-5 space-y-1 text-sm mt-2">
               {module.lessons?.length > 0 ? (
                 module.lessons.map((lesson) => (
-                  <>
-                    <LessonVideoPlayer
-                      key={lesson._id}
-                      lesson={lesson}
-                      modules={course.modules}
-                    />
-                  </>
+                  <LessonVideoPlayer
+                    key={lesson._id}
+                    lesson={lesson}
+                    modules={updatedCourse.modules}
+                  />
                 ))
               ) : (
                 <li className="text-gray-400 italic">
@@ -136,6 +212,7 @@ const AdminCourseDetails = () => {
         ))}
       </div>
     ),
+
     Instructor: (
       <div className="px-6 md:px-12 my-6 ">
         <div className="flex justify-center p-4 gap-2  items-center">

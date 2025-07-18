@@ -126,7 +126,7 @@ export default function AdminSideBar() {
         </nav>
       </aside>
 
-      {/* You can render <Outlet /> or children here if using layout */}
+      
     </div>
   );
 }
