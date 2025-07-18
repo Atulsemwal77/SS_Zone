@@ -1,6 +1,6 @@
 // src/pages/Admin/AdminCourseDetails.jsx
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import avatar from "../../../assets/image/avatar.png";
@@ -9,6 +9,10 @@ import { FaDribbble, FaLinkedin, FaTwitter } from "react-icons/fa";
 import ReactPlayer from "react-player";
 import LessonVideoPlayer from "../../../courseUpload/LassonVideoPlayer";
 import EditCourseModal from "../../../courseUpload/CourseEdit";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminCourseDetails = () => {
   const location = useLocation();
@@ -35,6 +39,32 @@ const AdminCourseDetails = () => {
     );
   }
 
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this course?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const res = await axios.delete(
+        `http://localhost:3999/api/courses/delete/${course._id}`
+      );
+
+      if (res.status === 200) {
+        toast.success("✅ Course deleted!");
+        navigate("/admin/enrollCourse");
+        // Optionally remove course from list or refresh
+      } else {
+        toast.error("❌ Could not delete course");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("❌ Failed to delete course");
+    }
+  };
+
   const content = {
     Overview: (
       <div className="px-6 md:px-12 my-6">
@@ -52,7 +82,7 @@ const AdminCourseDetails = () => {
     Curriculum: (
       <div className="px-6 md:px-12 my-6">
         <h2 className="text-xl font-bold mb-4">Course Modules</h2>
-        
+
         <p className="text-md font-medium mt-2 text-green-600">
           Total Lessons:{" "}
           {course.modules?.reduce(
@@ -74,8 +104,11 @@ const AdminCourseDetails = () => {
               {module.lessons?.length > 0 ? (
                 module.lessons.map((lesson) => (
                   <>
-                  
-                  <LessonVideoPlayer key={lesson._id} lesson={lesson} modules={course.modules} />
+                    <LessonVideoPlayer
+                      key={lesson._id}
+                      lesson={lesson}
+                      modules={course.modules}
+                    />
                   </>
                 ))
               ) : (
@@ -215,17 +248,23 @@ const AdminCourseDetails = () => {
             </a>
           </div>
           <div className="mt-4">
-            <button className="border w-full  p-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600 ">
-              Edit Course
-            </button>
-            <button className="border w-full  p-1 text-blue-500 rounded-lg mt-2">
-              Delete Course
-            </button>
             <button
               className="border w-full mt-4 p-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
               onClick={() => setIsModalOpen(true)}
             >
               Edit Course
+            </button>
+            <button
+              className="border w-full p-1 text-blue-500 rounded-lg mt-2"
+              onClick={handleDelete}
+            >
+              Delete Course
+            </button>
+            <button
+              className="border w-full p-1 text-blue-500 rounded-lg mt-2"
+              onClick={handleDelete}
+            >
+              Status Update
             </button>
 
             {isModalOpen && (
@@ -236,6 +275,7 @@ const AdminCourseDetails = () => {
               />
             )}
           </div>
+          <ToastContainer position="top-right" autoClose={2000} />
         </aside>
       </div>
     </>

@@ -48,7 +48,6 @@ router.post("/create", upload.single("thumbnail"), async (req, res) => {
     res.status(500).json({ error: "Failed to create course" });
   }
 });
-
 router.put("/update/:id", upload.single("thumbnail"), async (req, res) => {
   try {
     const { id } = req.params;
@@ -89,7 +88,6 @@ router.put("/update/:id", upload.single("thumbnail"), async (req, res) => {
     res.status(500).json({ error: "Failed to update course" });
   }
 });
-
 
 router.post("/:id/additional-info", async (req, res) => {
   try {
@@ -166,7 +164,6 @@ router.put("/:id/additional-info", async (req, res) => {
   }
 });
 
-
 router.post("/:id/upload-video", async (req, res) => {
   try {
     const { videoUrl } = req.body;
@@ -199,10 +196,11 @@ router.put("/:id/upload-video", async (req, res) => {
     res.json(course);
   } catch (err) {
     console.error("Video upload error:", err);
-    res.status(500).json({ message: "Error uploading video", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error uploading video", error: err.message });
   }
 });
-
 
 router.post("/:id/course-overview", async (req, res) => {
   try {
@@ -241,7 +239,6 @@ router.post("/:id/course-overview", async (req, res) => {
     res.status(500).json({ message: "Error updating course additional info" });
   }
 });
-
 router.put("/:id/course-overview", async (req, res) => {
   try {
     const {
@@ -285,8 +282,6 @@ router.put("/:id/course-overview", async (req, res) => {
   }
 });
 
-
-
 router.get("/all/full", async (req, res) => {
   try {
     const allCourses = await Course.find()
@@ -326,8 +321,30 @@ router.get("/:id/full", async (req, res) => {
   }
 });
 
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const deleteLesson = await Course.findByIdAndDelete(id);
 
+    if (!deleteLesson) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
 
+    return res.status(200).json({
+      success: true,
+      message: "Course deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to delete course",
+      error: error.message,
+    });
+  }
+});
 
 module.exports = router;
