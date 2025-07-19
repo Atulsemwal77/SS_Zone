@@ -56,8 +56,9 @@ import AdminCourseAdd from './dashboard/adminDashboard/AdminCourseAdd.jsx';
 import AllCoursesPage from './courseUpload/AllCoursesPage.jsx';
 import AdminCourseDetails from './dashboard/adminDashboard/adminPage/courseDetails.jsx';
 import Announcement from './dashboard/adminDashboard/adminPage/Announcement.jsx';
-import AdminBlogs from './dashboard/adminDashboard/adminPage/Blogs.jsx';
+import AdminBlogs from './dashboard/adminDashboard/adminPage/AdminBlogs.jsx';
 import ApproveCourses from './dashboard/adminDashboard/adminPage/Approve Courses.jsx';
+import AdminBlogDetailPage from './dashboard/adminDashboard/adminPage/AdminBlogDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -123,6 +124,7 @@ const router = createBrowserRouter([
     { path: "payment" , element :  <AdminPayment/>},
     {path : "announcement" , element : <Announcement/>},
     {path : "blogs", element : <AdminBlogs/>},
+    {path : "blogdetail/:id" , element : <AdminBlogDetailPage/>},
     {path : "approveCourses", element : <ApproveCourses/>},
     { path: "setting" , element :  <AdminSettings/>},
     { path: "logout" , element :  <AdminLogout/>},
