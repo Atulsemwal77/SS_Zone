@@ -72,16 +72,19 @@ router.delete("/lessons/:lessonId", async (req, res) => {
       return res.status(404).json({ message: "Lesson not found" });
     }
 
-    // Also remove the lesson from its module
-    await Module.findByIdAndUpdate(deletedLesson.module, {
-      $pull: { lessons: lessonId }
-    });
+    // Only update module if lesson.module exists
+    if (deletedLesson.module) {
+      await Module.findByIdAndUpdate(deletedLesson.module, {
+        $pull: { lessons: lessonId.toString() }
+      });
+    }
 
     res.json({ message: "Lesson deleted successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 
 module.exports = router;

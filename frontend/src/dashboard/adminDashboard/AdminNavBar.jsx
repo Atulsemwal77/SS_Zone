@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa'
 
 export default function AdminNavbar() {
   return (
-    <div className="border-b bg-white px-6 py-4 shadow flex justify-between items-center w-full">
+    <div className="border-b bg-white px-6 py-4 shadow flex justify-between items-center w-full max-w-screen-2xl mx-auto">
       {/* Logo */}
       <div className="flex items-center space-x-3">
         <img src={logo} alt="Logo" className="h-10 w-auto" />

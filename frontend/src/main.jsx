@@ -55,6 +55,9 @@ import InstructorProtectedRoute from './dashboard/instructorDashboard/Instructor
 import AdminCourseAdd from './dashboard/adminDashboard/AdminCourseAdd.jsx';
 import AllCoursesPage from './courseUpload/AllCoursesPage.jsx';
 import AdminCourseDetails from './dashboard/adminDashboard/adminPage/courseDetails.jsx';
+import Announcement from './dashboard/adminDashboard/adminPage/Announcement.jsx';
+import AdminBlogs from './dashboard/adminDashboard/adminPage/Blogs.jsx';
+import ApproveCourses from './dashboard/adminDashboard/adminPage/Approve Courses.jsx';
 
 const router = createBrowserRouter([
   {
@@ -118,6 +121,9 @@ const router = createBrowserRouter([
     { path: "quizAttempt" , element :  <AdminQuizAttempt/>},
     { path : "category", element:<AdminCategory/>},
     { path: "payment" , element :  <AdminPayment/>},
+    {path : "announcement" , element : <Announcement/>},
+    {path : "blogs", element : <AdminBlogs/>},
+    {path : "approveCourses", element : <ApproveCourses/>},
     { path: "setting" , element :  <AdminSettings/>},
     { path: "logout" , element :  <AdminLogout/>},
     ]

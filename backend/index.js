@@ -21,6 +21,7 @@ const module_route = require("./routes/ModuleRoute")
 const additionalInfo_route = require ('./routes/additionalInfoRoute');
 const adminRouter = require("./routes/adminAuthRoute");
 const instructorRouter = require("./routes/instructorRoute");
+const blog_route = require("./routes/blogRoute")
 
 
 app.use('/api/auth', auth_Routes);  //student
@@ -35,6 +36,8 @@ app.use("/uploads", express.static("uploads"));  //multer
 app.use("/api/courses", course_route);
 app.use('/api', module_route);
 app.use("/api/additional-info", additionalInfo_route);
+
+app.use("/api/blogs" , blog_route)
 
 
 

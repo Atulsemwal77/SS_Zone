@@ -48,7 +48,7 @@ const feedbacks = [
 
 function EnrolledCoursesChart() {
   return (
-    <div className="bg-white p-4 rounded-xl shadow-md w-full">
+    <div className="bg-white p-4 rounded-xl shadow-md w-full ">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-700">Courses Enrolled Status</h2>
         <select className="border text-sm rounded px-2 py-1">
@@ -95,7 +95,7 @@ const AdminOverview = () => {
           Create a New Course <FaArrowRight />
         </button>
     </div> */}
-
+    <div className="max-w-screen-2xl mx-auto">
       <p className="font-semibold text-lg mb-2">Summary</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
@@ -203,6 +203,7 @@ const AdminOverview = () => {
           </table>
         </div>
       </div>
+    </div>
     </div>
     </>
   );

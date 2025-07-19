@@ -1,8 +1,9 @@
-// 📁 src/components/LessonVideoPlayer.jsx
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import { FiEdit } from "react-icons/fi";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 import LessonEditModal from "./LessonEdit";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LessonVideoPlayer = ({ lesson, modules }) => {
   const [showVideo, setShowVideo] = useState(false);
@@ -28,14 +29,32 @@ const LessonVideoPlayer = ({ lesson, modules }) => {
     setEditingLesson(null);
   };
 
+  const handleDeleteLesson = async (lessonId) => {
+    if (!window.confirm("Are you sure you want to delete this lesson?")) return;
+
+    try {
+      await axios.delete(`http://localhost:3999/api/lessons/${lessonId}`);
+
+      const updatedModules = localModules.map((mod) => ({
+        ...mod,
+        lessons: mod.lessons.filter((l) => l._id !== lessonId),
+      }));
+      setLocalModules(updatedModules);
+      toast.success("Lesson deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete the lesson");
+      console.error("Delete error:", error);
+    }
+  };
+
   const formattedTime = `${lesson.lessonHour || 0}h ${
     lesson.lessonMinute || 0
   }m ${lesson.lessonSecond || 0}s`;
 
   return (
     <>
-      <li className="bg-white  rounded-lg shadow-sm p-4 my-4">
-        {/* Title and Edit Button */}
+      <li className="bg-white rounded-lg shadow-sm p-4 my-4">
+        {/* Title and Buttons */}
         <div className="flex justify-between items-center">
           <div className="font-semibold text-lg text-gray-800">
             {lesson.lessonTitle}
@@ -43,19 +62,28 @@ const LessonVideoPlayer = ({ lesson, modules }) => {
               ({formattedTime})
             </span>
           </div>
-          <button
-            onClick={() => handleEditClick(lesson)}
-            className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
-          >
-            <FiEdit />
-            <span>Edit</span>
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => handleEditClick(lesson)}
+              className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
+            >
+              <FiEdit />
+              <span>Edit</span>
+            </button>
+            <button
+              onClick={() => handleDeleteLesson(lesson._id)}
+              className="text-red-500 hover:text-red-700 flex items-center gap-1"
+            >
+              <FiTrash2 />
+              <span>Delete</span>
+            </button>
+          </div>
         </div>
 
-        {/* Lesson Content */}
+        {/* Content */}
         <p className="text-gray-600 mt-2">{lesson.lessonContent}</p>
 
-        {/* Video Toggle Button */}
+        {/* Video Toggle */}
         <button
           onClick={() => setShowVideo(!showVideo)}
           className="mt-3 text-white bg-blue-600 hover:bg-blue-700 px-4 py-1 rounded-md text-sm"
@@ -63,7 +91,7 @@ const LessonVideoPlayer = ({ lesson, modules }) => {
           {showVideo ? "Hide Video" : "Watch Course Video"}
         </button>
 
-        {/* Video Player */}
+        {/* Video */}
         {showVideo && (
           <div className="mt-4">
             {lesson.lessonVideoSource &&

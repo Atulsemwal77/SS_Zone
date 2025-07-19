@@ -7,6 +7,8 @@ import AdminTopBar from "./AdminTopBar";
 const AdminOutlet = () => {
   return (
     <>
+    <div className="max-w-screen-2xl mx-auto">
+
       <AdminNavbar />
       <div className="flex">
         <AdminSideBar />
@@ -15,6 +17,7 @@ const AdminOutlet = () => {
           <Outlet />
         </div>
       </div>
+    </div>
     </>
   );
 };

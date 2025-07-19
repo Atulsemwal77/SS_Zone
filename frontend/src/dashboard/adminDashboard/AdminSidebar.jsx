@@ -102,6 +102,36 @@ export default function AdminSideBar() {
             <span>Payment History</span>
           </NavLink>
 
+          <NavLink
+            to="/admin/announcement"
+            className={({ isActive }) =>
+              `${linkClass} ${isActive ? activeClass : ""}`
+            }
+          >
+            <FaCreditCard />
+            <span>Announcement</span>
+          </NavLink>
+
+          <NavLink
+            to="/admin/blogs"
+            className={({ isActive }) =>
+              `${linkClass} ${isActive ? activeClass : ""}`
+            }
+          >
+            <FaCreditCard />
+            <span>Blogs</span>
+          </NavLink>
+
+          <NavLink
+            to="/admin/approveCourses"
+            className={({ isActive }) =>
+              `${linkClass} ${isActive ? activeClass : ""}`
+            }
+          >
+            <FaCreditCard />
+            <span>Approve Courses</span>
+          </NavLink>
+
           <hr className="my-4" />
 
           <NavLink
