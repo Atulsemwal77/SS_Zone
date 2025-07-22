@@ -10,7 +10,7 @@ function InstructorLogin() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND}instructor/login`,  loginData);
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND}instructor/login`,  loginData , { withCredentials: true });
       
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
