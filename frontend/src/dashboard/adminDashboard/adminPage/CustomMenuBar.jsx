@@ -215,13 +215,13 @@ const CustomMenuBar = ({ editor }) => {
         >
           <LinkIcon className="h-5 w-5" />
         </button>
-        <button
+        {/* <button
           onClick={() => editor.chain().focus().unsetLink().run()}
           className="p-2 rounded-md text-gray-700 hover:bg-gray-200"
           title="Remove Link"
         >
           Unlink
-        </button>
+        </button> */}
       </div>
 
       {/* Text Alignment */}

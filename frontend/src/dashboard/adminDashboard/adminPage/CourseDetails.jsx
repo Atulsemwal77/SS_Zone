@@ -126,13 +126,13 @@ const AdminCourseDetails = () => {
             onClick={() => setIsAddLessonOpen(true)}
             className="  px-4 py-1 rounded border"
           >
-            ➕ Add Lesson
+            + Add Lesson
           </button>
           <button
             onClick={() => setIsAddModuleOpen(true)}
             className=" border px-4 py-1 rounded"
           >
-            ➕ Add Module
+            + Add Module
           </button>
         </div>
 

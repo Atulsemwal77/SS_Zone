@@ -24,6 +24,22 @@ router.post('/modules', async (req, res) => {
   }
 });
 
+router.put('/modules/:id', async (req , res)=>{
+  try {
+    const {id} = req.params;
+    const updatedModule = await Module.findByIdAndUpdate(
+      id , 
+      {new : true}
+    );
+    if(!updatedModule){
+      return res.status(404).json({error : "Module not found"})
+    }
+    res.status(200).json(updatedModule);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+})
+
 // Add lesson to module
 router.post("/modules/:moduleId/lessons", async (req, res) => {
   try {

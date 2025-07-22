@@ -482,6 +482,13 @@ const BlogModalPage = () => {
     author: "",
     tags: "",
     content: "",
+    category: "",
+    language: "",
+    dribbble: "",
+    linkedin: "",
+    facebook: "",
+    twitter: "",
+    review: "",
   });
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -530,6 +537,13 @@ const BlogModalPage = () => {
       author: "",
       tags: "",
       content: "",
+      category: "",
+      language: "",
+      dribbble: "",
+      linkedin: "",
+      facebook: "",
+      twitter: "",
+      review: "",
     });
     setImage(null);
     setImagePreview(null);
@@ -587,6 +601,7 @@ const BlogModalPage = () => {
     }
   };
 
+  
   const handleEdit = (blog) => {
     setFormData({
       title: blog.title,
@@ -594,6 +609,13 @@ const BlogModalPage = () => {
       author: blog.author,
       tags: blog.tags.join(", "),
       content: blog.content,
+      category: blog.category,
+      language: blog.language,
+      dribbble: blog.dribbble,
+      linkedin: blog.linkedin ,
+      facebook: blog.facebook,
+      twitter: blog.twitter ,
+      review: blog.review || 3,
     });
 
     // Safe image preview setup
@@ -710,6 +732,70 @@ const BlogModalPage = () => {
                   className="prose max-w-none min-h-[150px]"
                 />
               </div>
+              <input
+                type="text"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                placeholder="Category"
+                className="w-full p-2 border rounded"
+              />
+
+              <input
+                type="text"
+                name="language"
+                value={formData.language}
+                onChange={handleChange}
+                placeholder="Language"
+                className="w-full p-2 border rounded"
+              />
+
+              <input
+                type="number"
+                name="review"
+                
+                value={formData.review}
+                onChange={handleChange}
+                placeholder="Review (0-5 or comment)"
+                className="w-full p-2 border rounded"
+              />
+
+              {/* Social Links */}
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="url"
+                  name="linkedin"
+                  value={formData.linkedin }
+                  onChange={handleChange}
+                  placeholder="LinkedIn URL"
+                  className="p-2 border rounded"
+                />
+                <input
+                  type="url"
+                  name="twitter"
+                  value={formData.twitter }
+                  onChange={handleChange}
+                  placeholder="Twitter URL"
+                  className="p-2 border rounded"
+                />
+                <input
+                  type="url"
+                  name="facebook"
+                  value={formData.facebook}
+                  onChange={handleChange}
+                  placeholder="Facebook URL"
+                  className="p-2 border rounded"
+                />
+                <input
+                  type="url"
+                  name="dribbble"
+                  value={formData.dribbble}
+                  onChange={handleChange}
+                  placeholder="Dribbble URL"
+                  className="p-2 border rounded"
+                />
+              </div>
+
               <button
                 type="submit"
                 className="w-full bg-black text-white p-2 rounded"
@@ -730,7 +816,7 @@ const BlogModalPage = () => {
         ) : blogs.length === 0 ? (
           <p className="text-center text-gray-500">No blogs available</p>
         ) : (
-          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-3">
             {blogs.map((blog) => (
               <div
                 key={blog._id}
@@ -760,18 +846,32 @@ const BlogModalPage = () => {
                     <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
                       {blog.title}
                     </h3>
-                    <p className="text-md text-gray-700">
+                    {console.log(blog.content)}
+                    {/* <p className="text-md text-gray-700"
+                    dangerouslySetInnerHTML={{ __html: blog.content }}
+                    >
                       {blog.content?.length > 25
                         ? `${blog.content.slice(0, 50)}...`
                         : blog.content || "No content"}
-                    </p>
+                    </p> */}
+                    <div
+                      className="text-md text-gray-700"
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          blog.content?.length > 50
+                            ? `${blog.content.slice(0, 50)}...`
+                            : blog.content || "No content",
+                      }}
+                    ></div>
+
                     <p className="text-sm text-gray-600 mb-1 flex items-center justify-between my-2">
-                      {new Date(blog.date).toLocaleDateString()} 
-                      <span className="text-[#296AD2] flex items-center gap-1">Read More <FaArrowRight/></span>
+                      {new Date(blog.date).toLocaleDateString()}
+                      <span className="text-[#296AD2] flex items-center gap-1">
+                        Read More <FaArrowRight />
+                      </span>
                     </p>
-                    
                   </div>
-                  
+
                   <div className="flex  p-4 justify-end  h-full gap-2 ">
                     <button
                       onClick={() => handleEdit(blog)}

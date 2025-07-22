@@ -3,7 +3,7 @@ const Blog = require('../models/blogModel');
 // Create Blog
 exports.createBlog = async (req, res) => {
   try {
-    const { title, date, author, tags, content } = req.body;
+    const { title, date, author, tags, content , category, language, dribbble, linkedin, facebook, twitter, review, } = req.body;
     const blog = new Blog({
       title,
       date,
@@ -11,6 +11,13 @@ exports.createBlog = async (req, res) => {
       tags: tags.split(',').map(tag => tag.trim()),
       content,
       image: req.file ? req.file.path : null,
+      category,
+      language,
+      dribbble,
+      linkedin,
+      facebook,
+      twitter,
+      review,
     });
     await blog.save();
     res.status(201).json({ message: 'Blog uploaded successfully', blog });
@@ -35,7 +42,7 @@ exports.getAllBlogs = async (req, res) => {
 exports.updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, date, author, tags, content } = req.body;
+    const { title, date, author, tags, content ,category, language, dribbble, linkedin, facebook, twitter, review, } = req.body;
 
     const updatedBlog = await Blog.findByIdAndUpdate(
       id,
@@ -46,6 +53,13 @@ exports.updateBlog = async (req, res) => {
         tags: tags?.split(',').map(tag => tag.trim()),
         content,
         ...(req.file && { image: req.file.path }),
+        category,
+      language,
+      dribbble,
+      linkedin,
+      facebook,
+      twitter,
+      review,
       },
       { new: true } // Return updated document
     );
