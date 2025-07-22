@@ -1,16 +1,17 @@
 import React from "react";
-import Navbar from "./instructorNavBar";
+
 import Sidebar from "./InstructorSidebar";
 import InstructorTopBar from "./InstructorTopBar";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InstructorNavbar from "./instructorPage/Navbar";
 
 
 const InstructorOutlet = () => {
   return (
     <>
-      <Navbar />
+      <InstructorNavbar/>
       <div className="flex">
         <Sidebar />
 

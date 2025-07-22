@@ -1,8 +1,8 @@
 import React from 'react';
-import logo from "../assets/logo.png";
+import logo from "../../../assets/image/logo.png";
 import { FaSearch } from 'react-icons/fa';
 
-export default function Header() {
+export default function InstructorNavbar() {
   return (
     <div className="border-b bg-white px-4 md:px-6 py-4 shadow flex justify-between items-center w-full">
       
