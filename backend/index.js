@@ -7,7 +7,13 @@ require('dotenv').config();
 const app = express();
 
 app.use(express.json());
-app.use(cors())
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true, // enable if using cookies/auth headers
+  })
+);
+console.log("frontend url" , process.env.FRONTEND_URL)
 
 const cart_route = require('./routes/cartRoute');
 const wishlist_route = require('./routes/wishlistRoute')
@@ -43,6 +49,10 @@ app.use("/api/blogs" , blog_route)
 
 app.use("/api/admin", adminRouter)
 app.use("/api/instructor", instructorRouter)
+
+app.use("/" , (req , res)=>{
+    return res.status(200).send({message : "Welcome to backend"})
+})
 
 connect();
 
