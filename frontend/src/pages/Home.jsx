@@ -220,7 +220,7 @@ function Home() {
   ];
 
   return (
-    <div>
+    <div className="max-w-screen-2xl mx-auto">
       <section className="px-4 md:px-16 mx-auto   ">
         <div className="flex flex-col lg:flex-row items-center justify-between  py-10 gap-5 ">
           <div className="lg:w-1/2 space-y-6">

@@ -27,7 +27,7 @@ const AboutUs = () => {
   return (
     <>
       <div
-        className="h-[60vh] w-full bg-cover bg-center flex items-center"
+        className="h-[60vh] w-full bg-cover bg-center flex items-center max-w-screen-2xl mx-auto"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className=" p-8 rounded-lg  text-black md:w-1/2 w-full">
@@ -41,7 +41,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <div className=" relative w-full overflow-hidden px-3">
+      <div className=" relative w-full overflow-hidden px-3 max-w-screen-2xl mx-auto">
         <div className="flex w-full justify-between gap-8 my-12 scrolling">
           <img src={vodafone} alt="vodafone" />
           <img src={intel} alt="intel" />

@@ -7,7 +7,7 @@ function Contact() {
   return (
     <>
       <div
-        className="h-[60vh] w-full bg-cover bg-center flex items-center"
+        className="h-[60vh] w-full bg-cover bg-center flex items-center max-w-screen-2xl mx-auto"
         style={{ backgroundImage: `url(${hero})` }}
       >
         <div className=" p-8 rounded-lg  text-black md:w-1/2 w-full">
@@ -19,7 +19,7 @@ function Contact() {
           </p>
         </div>
       </div>
-      <div className="w-full flex flex-col gap-[30px]">
+      <div className="max-w-screen-2xl mx-auto">
         <ContactForm />
         <div className="w-full ">
           <img src={map} alt="map" className="w-full" />

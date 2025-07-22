@@ -44,7 +44,7 @@ useEffect(() => {
   return (
     <>
       <div
-        className="h-[60vh] w-full bg-cover bg-center flex items-center"
+        className="h-[60vh] w-full bg-cover bg-center flex items-center max-w-screen-2xl mx-auto"
         style={{ backgroundImage: `url(${hero})` }}
       >
         <div className=" p-8 rounded-lg  text-black md:w-1/2 w-full">
@@ -73,7 +73,7 @@ useEffect(() => {
             </p>
           </div>
 
-          <div className="flex gap-6 flex-wrap justify-center">
+          <div className="flex gap-6 flex-wrap justify-center ">
             {categoriesButton.map((category) => (
               <button
                 key={category}

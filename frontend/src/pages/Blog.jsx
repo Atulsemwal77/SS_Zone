@@ -111,7 +111,7 @@ export const Blog = () => {
   return (
     <>
       <div
-        className="h-[60vh] w-full bg-cover bg-center flex items-center"
+        className="h-[60vh] w-full bg-cover bg-center flex items-center max-w-screen-2xl mx-auto"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className=" p-8 rounded-lg  text-black md:w-1/2 w-full">
@@ -136,7 +136,7 @@ export const Blog = () => {
             expert blog posts.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-10 max-w-screen-2xl mx-auto">
           {blogData.map((blog) => (
             <BlogCard
               key={blog.id}

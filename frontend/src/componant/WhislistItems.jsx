@@ -96,7 +96,7 @@ function WishlistItems() {
   }
 
   return (
-    <div className="pb-[30px] px-4 sm:px-10 md:px-24 font-[Manrope]">
+    <div className="pb-[30px] px-4 sm:px-10 md:px-24 font-[Manrope] max-w-screen-2xl mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {wishlistItems.map((course, index) => (
           <div

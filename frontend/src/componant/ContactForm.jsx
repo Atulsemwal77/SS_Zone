@@ -46,7 +46,7 @@ function ContactForm() {
   };
 
   return (
-    <div className="py-[30px] px-4 sm:px-10 md:px-24 flex flex-col lg:flex-row">
+    <div className="py-[30px]  flex flex-col lg:flex-row ">
       {/* Left Section */}
       <div className="flex-1">
         <div className="">

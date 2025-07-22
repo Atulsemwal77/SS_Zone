@@ -57,7 +57,7 @@ const CourseList = ({ all_course }) => {
 
 
   return (
-    <div className="px-4 sm:px-10 lg:px-24 font-[Manrope]">
+    <div className="px-4 sm:px-10  font-[Manrope] max-w-screen-2xl mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-x-10 gap-y-5">
         {all_course.map((course) => (
           <div

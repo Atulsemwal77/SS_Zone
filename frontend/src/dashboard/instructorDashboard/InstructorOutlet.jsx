@@ -11,6 +11,7 @@ import InstructorNavbar from "./instructorPage/Navbar";
 const InstructorOutlet = () => {
   return (
     <>
+    <div className="max-w-screen-2xl mx-auto">
       <InstructorNavbar/>
       <div className="flex">
         <Sidebar />
@@ -21,6 +22,7 @@ const InstructorOutlet = () => {
         </div>
       </div>
       <ToastContainer autoClose={1000} />
+      </div>
     </>
   );
 };

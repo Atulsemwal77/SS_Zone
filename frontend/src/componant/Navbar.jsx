@@ -102,7 +102,7 @@ function Navbaar() {
   ];
 
   return (
-    <nav className="bg-white shadow-sm mx-auto px-4">
+    <nav className="max-w-screen-2xl mx-auto bg-white shadow-sm  px-4">
       <div className="py-4 flex items-center justify-between mx-auto">
         <NavLink to="/" className="flex items-center gap-2">
           <img src={logo} alt="Site Logo" />

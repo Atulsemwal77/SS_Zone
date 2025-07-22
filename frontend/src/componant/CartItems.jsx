@@ -83,7 +83,7 @@ function CartItems() {
   };
 
   return (
-    <div className="font-[Manrope]">
+    <div className="font-[Manrope] max-w-screen-2xl mx-auto">
       <div className="flex flex-col lg:flex-row gap-10 w-full">
         <div className="flex-1 space-y-6 max-h-[500px] overflow-auto">
           {cartItems.length === 0 ? (

@@ -7,7 +7,7 @@ function Cart() {
   const topThree = all_course.slice(0, 3);
 
   return (
-    <div className='w-full font-[Manrope]'>
+    <div className='w-full font-[Manrope] max-w-screen-2xl mx-auto'>
         <div className='px-4 md:px-24 py-[30px] '>
             <h1 className='font-semibold text-[48px] leading-[100%] tracking-normal pb-6'>Shopping Cart</h1>
           <CartItems/>

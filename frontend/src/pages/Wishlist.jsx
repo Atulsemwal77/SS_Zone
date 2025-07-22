@@ -7,7 +7,7 @@ function Wishlist() {
   return (
     <>
       <div
-        className="h-[60vh] w-full bg-cover bg-center flex items-center"
+        className="h-[60vh] w-full bg-cover bg-center flex items-center max-w-screen-2xl mx-auto"
         style={{ backgroundImage: `url(${hero})` }}
       >
         <div className=" p-8 rounded-lg  text-black md:w-1/2 w-full">
