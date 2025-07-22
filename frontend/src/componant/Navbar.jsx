@@ -61,7 +61,7 @@ function Navbaar() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${import.meta.env.VITE_BACKEND}auth/login`, loginData);
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND}auth/login`, loginData , { withCredentials: true });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.result));
       localStorage.setItem("role", res.data.role);
@@ -78,7 +78,7 @@ function Navbaar() {
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND}auth/signup`, signupData);
+      await axios.post(`${import.meta.env.VITE_BACKEND}auth/signup`, signupData , { withCredentials: true });
       toast.success("Signup Successful");
       setShowSignup(false);
     } catch (err) {
