@@ -33,7 +33,7 @@ const LessonVideoPlayer = ({ lesson, modules }) => {
     if (!window.confirm("Are you sure you want to delete this lesson?")) return;
 
     try {
-      await axios.delete(`http://localhost:3999/api/lessons/${lessonId}`);
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/lessons/${lessonId}`);
 
       const updatedModules = localModules.map((mod) => ({
         ...mod,

@@ -35,9 +35,10 @@ const AdminCourseDetails = () => {
     setUpdatedCourse(newData);
   };
 
+  // Module Update
   const handleUpdate = async (id) => {
     try {
-      const res = await axios.put(`http://localhost:3999/api/modules/${id}`, {
+      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/modules/${id}`, {
         title: editTitle,
       });
       toast.success("Module updated successfully");
@@ -66,7 +67,7 @@ const AdminCourseDetails = () => {
 
   const handleDeleteModule = async (id) => {
     try {
-      await axios.delete(`http://localhost:3999/api/modules/${id}`);
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/modules/${id}`);
       toast.success("Module deleted successfully");
       //  fetchCourseDetails()
       // Refresh module list after deletion
@@ -80,7 +81,7 @@ const AdminCourseDetails = () => {
   const fetchCourseDetails = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3999/api/courses/${course._id}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/${course._id}`
       );
       if (res.status === 200) {
         setUpdatedCourse(res.data);
@@ -101,7 +102,7 @@ const AdminCourseDetails = () => {
 
     try {
       const res = await axios.delete(
-        `http://localhost:3999/api/courses/delete/${course._id}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/delete/${course._id}`
       );
 
       if (res.status === 200) {
@@ -120,7 +121,7 @@ const AdminCourseDetails = () => {
   const handleStatusUpdate = async (courseId, newStatus) => {
     try {
       const res = await axios.put(
-        `http://localhost:3999/api/courses/status/${courseId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/status/${courseId}`,
         { status: newStatus }
       );
 

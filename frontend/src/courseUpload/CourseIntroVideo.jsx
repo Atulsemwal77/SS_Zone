@@ -18,7 +18,7 @@ const CourseIntroVideo = ({ courseId, onUploaded }) => {
     }
 
     try {
-      await axios.post(`${import.meta.env.VITE_BACKEND}courses/${courseId}/upload-video`, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/courses/${courseId}/upload-video`, {
         videoUrl,
       });
 

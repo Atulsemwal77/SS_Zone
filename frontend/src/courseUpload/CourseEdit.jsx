@@ -34,7 +34,7 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
       }
 
       const response = await axios.put(
-        `http://localhost:3999/api/courses/update/${course._id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/update/${course._id}`,
         data
       );
 
@@ -71,7 +71,7 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3999/api/courses/${course._id}/additional-info`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/${course._id}/additional-info`,
         additionalformData
       );
       console.log("Updated:", response.data);
@@ -107,7 +107,7 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:3999/api/courses/${course._id}/course-overview`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/${course._id}/course-overview`,
         overviewData
       );
       toast.success("✅ Course Overview Updated!");
@@ -132,7 +132,7 @@ const EditCourseModal = ({ course, onClose, onUpdated }) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:3999/api/courses/${course._id}/upload-video`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/${course._id}/upload-video`,
         { videoUrl }
       );
       alert("✅ Video URL uploaded successfully!");

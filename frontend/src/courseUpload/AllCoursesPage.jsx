@@ -10,7 +10,7 @@ const AllCoursesPage = () => {
     const fetchAllCourses = async () => {
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_BACKEND}courses/all/full`
+          `${import.meta.env.VITE_BACKEND_URL}/api/courses/all/full`
         );
         setCourses(res.data);
       } catch (err) {

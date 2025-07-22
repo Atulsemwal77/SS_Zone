@@ -54,11 +54,11 @@ import InstructorLogin from './dashboard/instructorDashboard/instructorPage/Inst
 import InstructorProtectedRoute from './dashboard/instructorDashboard/InstructorProtectedRoute.jsx';
 import AdminCourseAdd from './dashboard/adminDashboard/AdminCourseAdd.jsx';
 import AllCoursesPage from './courseUpload/AllCoursesPage.jsx';
-import AdminCourseDetails from './dashboard/adminDashboard/adminPage/courseDetails.jsx';
 import Announcement from './dashboard/adminDashboard/adminPage/Announcement.jsx';
 import AdminBlogs from './dashboard/adminDashboard/adminPage/AdminBlogs.jsx';
 import ApproveCourses from './dashboard/adminDashboard/adminPage/Approve Courses.jsx';
 import AdminBlogDetailPage from './dashboard/adminDashboard/adminPage/AdminBlogDetails.jsx';
+import AdminCourseDetails from './dashboard/adminDashboard/adminPage/CourseDetails.jsx';
 
 const router = createBrowserRouter([
   {

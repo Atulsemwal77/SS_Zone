@@ -63,7 +63,7 @@ const AdditionalInfoForm = ({ courseId }) => {
       };
 
       const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND}courses/${courseId}/additional-info`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/${courseId}/additional-info`,
         payload
       );
 

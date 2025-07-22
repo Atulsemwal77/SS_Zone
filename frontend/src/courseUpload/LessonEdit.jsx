@@ -17,7 +17,7 @@ const LessonEditModal = ({ lesson, onClose, onLessonUpdated }) => {
 
     try {
       const res = await axios.put(
-        `${import.meta.env.VITE_BACKEND}lessons/${lesson._id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/lessons/${lesson._id}`,
         formData
       );
       toast.success("✅ Lesson updated!");

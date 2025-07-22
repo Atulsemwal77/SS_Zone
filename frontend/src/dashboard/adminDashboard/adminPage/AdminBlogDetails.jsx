@@ -29,7 +29,7 @@ const AdminBlogDetailPage = () => {
     <>
       <div className="w-full h-72 md:h-[400px] rounded-xl overflow-hidden max-w-4xl mx-auto">
         <img
-          src={`http://localhost:3999/${blog.image}`}
+          src={`${import.meta.env.VITE_BACKEND_URL}/${blog.image}`}
           alt="Blog Banner"
           className="w-full h-full object-cover "
         />
@@ -146,7 +146,7 @@ const AdminBlogDetailPage = () => {
               className="flex items-start gap-3 mb-4 border-b pb-3"
             >
               <img
-                src={`http://localhost:3999/${post.image}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/${post.image}`}
                 alt={post.title}
                 className="w-16 h-16 object-cover rounded"
               />

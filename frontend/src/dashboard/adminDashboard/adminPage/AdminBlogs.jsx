@@ -48,7 +48,7 @@
 //         tags: formData.tags.split(",").map((tag) => tag.trim()),
 //         review: parseFloat(formData.review)
 //       };
-//       await axios.post("http://localhost:3999/api/blogs/addblogs", payload);
+//       await axios.post("${import.meta.env.VITE_BACKEND_URL}/api/blogs/addblogs", payload);
 //       toast.success("Blog uploaded successfully!");
 //       setFormData({
 //         title: "",
@@ -76,7 +76,7 @@
 
 //   const fetchBlogs = async () => {
 //     try {
-//       const res = await axios.get("http://localhost:3999/api/blogs/getblogs");
+//       const res = await axios.get("${import.meta.env.VITE_BACKEND_URL}/api/blogs/getblogs");
 //       setBlogs(res.data);
 //     } catch (error) {
 //       console.error("Failed to fetch blogs:", error);
@@ -621,7 +621,7 @@ const BlogModalPage = () => {
     // Safe image preview setup
     setImagePreview(
       blog.image
-        ? `http://localhost:3999/${blog.image.replace(/\\/g, "/")}`
+        ? `${import.meta.env.VITE_BACKEND_URL}/${blog.image.replace(/\\/g, "/")}`
         : null
     );
 
@@ -833,7 +833,7 @@ const BlogModalPage = () => {
                   <div className="w-full h-64 ">
                     {blog.image && (
                       <img
-                        src={`http://localhost:3999/${blog.image}`}
+                        src={`${import.meta.env.VITE_BACKEND_URL}/${blog.image}`}
                         alt={blog.title}
                         className="w-full h-full "
                       />

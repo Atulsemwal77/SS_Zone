@@ -17,7 +17,7 @@ const Homepage = ({ courseId, setCourseId }) => {
     if (!courseId) return;
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND}courses/${courseId}/full`
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/${courseId}/full`
       );
       setModules(res.data.modules || []);
     } catch (err) {

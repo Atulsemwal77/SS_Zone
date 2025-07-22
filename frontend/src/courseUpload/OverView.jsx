@@ -28,7 +28,7 @@ const EditCourseOverview = ({ courseId }) => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND}courses/${courseId}/course-overview`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/courses/${courseId}/course-overview`,
         {
           overviewdescription: formData.description,
           whatYouWillLearn: formData.whatYouWillLearn,
