@@ -1,7 +1,7 @@
 // src/pages/Admin/AdminCourseDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaStar, FaRegStar } from "react-icons/fa";
+import { FaStar, FaRegStar, FaEdit, FaTrash } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import avatar from "../../../assets/image/avatar.png";
 import { MdCurrencyRupee } from "react-icons/md";
@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ModuleForm from "../../../courseUpload/ModuleForm";
 import LessonForm from "../../../courseUpload/LessonForm";
+import { FiX } from "react-icons/fi";
 
 const AdminCourseDetails = () => {
   const location = useLocation();
@@ -27,8 +28,26 @@ const AdminCourseDetails = () => {
   const [isAddLessonOpen, setIsAddLessonOpen] = useState(false);
   const [selectedModuleId, setSelectedModuleId] = useState(null);
 
+  const [editModuleId, setEditModuleId] = useState(null);
+  const [editTitle, setEditTitle] = useState("");
+
   const handleUpdated = (newData) => {
     setUpdatedCourse(newData);
+  };
+
+  const handleUpdate = async (id) => {
+    try {
+      const res = await axios.put(`http://localhost:3999/api/modules/${id}`, {
+        title: editTitle,
+      });
+      toast.success("Module updated successfully");
+
+      setEditModuleId(null);
+      setEditTitle("");
+    } catch (error) {
+      toast.error("Failed to update module");
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -44,6 +63,19 @@ const AdminCourseDetails = () => {
       </div>
     );
   }
+
+  const handleDeleteModule = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3999/api/modules/${id}`);
+      toast.success("Module deleted successfully");
+      //  fetchCourseDetails()
+      // Refresh module list after deletion
+      // fetchModules(); // or update local state to remove the deleted module
+    } catch (error) {
+      toast.error("Failed to delete module");
+      console.error(error);
+    }
+  };
 
   const fetchCourseDetails = async () => {
     try {
@@ -191,7 +223,48 @@ const AdminCourseDetails = () => {
             key={module._id}
             className="mt-4 border border-gray-200 p-4 rounded"
           >
-            <h4 className="font-bold text-lg">{module.title}</h4>
+            <div className="flex items-center justify-between">
+              {editModuleId === module._id ? (
+                <input
+                  type="text"
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  className="border "
+                />
+              ) : (
+                <p className="font-semibold ">{module.title}</p>
+              )}
+
+              <div className="flex items-center gap-2">
+                <FaEdit
+                  className="text-blue-500 cursor-pointer"
+                  onClick={() => {
+                    setEditModuleId(module._id);
+                    setEditTitle(module.title);
+                  }}
+                />
+                <FaTrash
+                  className="text-red-500 cursor-pointer"
+                  onClick={() => handleDeleteModule(module._id)}
+                />
+                {editModuleId === module._id && (
+                  <>
+                    <button
+                      className="bg-green-500 text-white px-2 py-1 rounded text-sm"
+                      onClick={() => handleUpdate(module._id)}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="bg-gray-400 text-white px-2 py-1 rounded text-sm"
+                      onClick={() => setEditModuleId(null)}
+                    >
+                      <FiX />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
 
             <ul className="list-disc pl-5 space-y-1 text-sm mt-2">
               {module.lessons?.length > 0 ? (
@@ -293,7 +366,7 @@ const AdminCourseDetails = () => {
           <div>{content[activeTab]}</div>
         </div>
 
-        <aside className="w-full md:w-[400px] flex-shrink-0 shadow-lg p-4 rounded-xl bg-white lg:-mt-43 -mt-10 ">
+        <aside className="w-full md:w-[400px] flex-shrink-0  p-4 rounded-xl bg-white lg:-mt-43 -mt-10 ">
           {/* <img src={video} alt="Demo Video" className="rounded-md mb-6" /> */}
           {course.videoUrl && ReactPlayer.canPlay(course.videoUrl) && (
             <div>

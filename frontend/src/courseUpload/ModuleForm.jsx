@@ -12,7 +12,7 @@ const ModuleForm = ({ courseId, onModuleCreated }) => {
         courseId,
       });
       setTitle("");
-      onModuleCreated(); // Refresh module list
+      // onModuleCreated(); // Refresh module list
     } catch (err) {
       console.error("❌ Error creating module:", err);
     }

@@ -24,21 +24,53 @@ router.post('/modules', async (req, res) => {
   }
 });
 
-router.put('/modules/:id', async (req , res)=>{
+// Update module title
+router.put('/modules/:id', async (req, res) => {
   try {
-    const {id} = req.params;
+    const moduleId = req.params.id;
+    const { title } = req.body;
+
     const updatedModule = await Module.findByIdAndUpdate(
-      id , 
-      {new : true}
+      moduleId,
+      { title },
+      { new: true }
     );
-    if(!updatedModule){
-      return res.status(404).json({error : "Module not found"})
+
+    if (!updatedModule) {
+      return res.status(404).json({ error: 'Module not found' });
     }
-    res.status(200).json(updatedModule);
+
+    res.status(200).json({ message: 'Module updated successfully', updatedModule });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-})
+});
+
+
+// Delete module and remove from course.modules[]
+router.delete('/modules/:id', async (req, res) => {
+  try {
+    const moduleId = req.params.id;
+
+    // Find the module to get courseId (optional if you store courseId in Module)
+    const module = await Module.findById(moduleId);
+    if (!module) return res.status(404).json({ error: 'Module not found' });
+
+    // Remove module from all courses that include it
+    await Course.updateMany(
+      { modules: moduleId },
+      { $pull: { modules: moduleId } }
+    );
+
+    // Delete the module
+    await Module.findByIdAndDelete(moduleId);
+
+    res.status(200).json({ message: 'Module deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // Add lesson to module
 router.post("/modules/:moduleId/lessons", async (req, res) => {
